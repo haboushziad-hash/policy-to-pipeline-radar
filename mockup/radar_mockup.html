@@ -1,0 +1,776 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Policy to Pipeline Radar: mockup</title><style>
+.radar{font-family:"Segoe UI",-apple-system,Roboto,Helvetica,Arial,sans-serif;color:#1d2733;background:#fff;max-width:1440px;font-size:14px;line-height:1.45}
+.radar *{box-sizing:border-box}
+.radar .bar{display:flex;align-items:center;gap:28px;padding:14px 20px;border-bottom:1px solid #d9dee5}
+.radar .logo{font-weight:700;font-size:18px;display:flex;align-items:center;gap:10px}
+.radar .logo i{width:20px;height:20px;border-radius:50%;border:6px solid #1f3a5f;display:inline-block}
+.radar .nav span{margin-right:22px;color:#4b5563}
+.radar .nav .on{font-weight:600;color:#111;background:#eef1f5;padding:6px 10px;border-radius:6px}
+.radar .proto{margin-left:auto;color:#6b7280;font-size:12px}
+.radar .wrap{padding:18px 20px}
+.radar .summary{color:#4b5563;margin-bottom:10px}
+.radar table{width:100%;border-collapse:collapse;border:1px solid #d9dee5}
+.radar th{background:#f3f5f8;text-align:left;font-weight:600;padding:10px 12px;border-bottom:1px solid #d9dee5;font-size:13px}
+.radar td{padding:12px;border-bottom:1px solid #e5e9ef;vertical-align:top}
+.radar .badge{display:inline-block;padding:4px 12px;border-radius:12px;font-weight:600;font-size:12px;white-space:nowrap}
+.radar .t1{background:#1f3a5f;color:#fff}.radar .t2{background:#4a6585;color:#fff}.radar .t3{background:#b7c6d8;color:#1d2733}
+.radar .title{font-weight:600;font-size:15px}
+.radar .reason{color:#4b5563;font-size:12px;margin-top:3px}
+.radar a{color:#2563a8;text-decoration:none}
+.radar .chip{display:inline-block;border:1px solid #cfd6df;border-radius:12px;padding:2px 10px;font-size:12px;background:#f7f8fa}
+.radar .muted{color:#6b7280;font-size:12px}
+.radar .none{color:#6b7280;font-style:italic}
+.radar .ph{border:1px dashed #9fb0c4;border-radius:6px;padding:8px 10px;color:#4b5563;font-size:12px;background:#fafbfc}
+.radar .ph b{color:#1d2733}
+.radar .status{margin-top:14px;padding:10px 14px;border:1px solid #d9dee5;border-radius:8px;background:#f5f7fa;font-size:13px}
+.radar .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 6px 0 14px}
+.radar .ok{background:#2e9e5b}.radar .bad{background:#e0663a}
+.radar .card{border:1px solid #d9dee5;border-radius:8px;padding:16px 18px;margin-top:14px;background:#fff}
+.radar .detail{border-top:3px solid #1f3a5f;margin-top:28px;padding-top:6px}
+.radar .quote{border:1px solid #e1e6ec;background:#f8f9fb;border-radius:6px;padding:12px 14px;margin:10px 0}
+.radar .quote q{font-style:italic}
+.radar h2{font-size:22px;margin:4px 0 2px;display:inline;vertical-align:middle}
+.radar h3{font-size:16px;margin:0 0 6px}
+.radar .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.radar .foot{margin-top:14px;padding:10px 14px;border:1px solid #d9dee5;border-radius:8px;background:#f5f7fa;color:#4b5563;font-size:12.5px}
+</style></head>
+<body style="margin:0;background:#fff"><div class="radar"><div class="bar"><div class="logo"><i></i>Policy to Pipeline Radar</div><div class="nav"><span class="on">Feed</span><span class="">Watchlist</span><span class="">Digest</span><span class="">Sources</span><span class="">Settings</span></div><div class="proto">Prototype · live public data pulled Oct 11, 2026</div></div><div class="wrap">
+<div class="summary">35 signals · Tier 1: 2 · Tier 2: 33 · strongest evidence first, newest first within a tier</div><table><tr><th>Tier</th><th>Signal and tier reason</th><th>Agency</th><th>Evidence (public source)</th><th>Date</th><th>Est. lead time</th></tr><tr><td><span class="badge t1">Tier 1</span></td><td><div class="title">Federal Acquisition Regulation: Revolutionary FAR Overhaul Parts 8, 12, 13, 15, 38, 44, and 51</div><div class="reason">Tier 1, rule T1-PRORULE: Federal Register proposed rule</div><a href="#detail-0">why this tier &rsaquo;</a></td><td>Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration</td><td><span class="chip">Federal Register</span><div class="muted">Proposed Rule</div></td><td style="white-space:nowrap">Sep 18, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t1">Tier 1</span></td><td><div class="title">Federal Acquisition Regulation: Revolutionary Federal Acquisition Regulation Overhaul Parts 14, 28, 36, and 52</div><div class="reason">Tier 1, rule T1-PRORULE: Federal Register proposed rule</div><a href="#detail-1">why this tier &rsaquo;</a></td><td>Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration</td><td><span class="chip">Federal Register</span><div class="muted">Proposed Rule</div></td><td style="white-space:nowrap">Sep 18, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Privacy Act of 1974; System of Records</div><div class="reason">Tier 2, rule T2-FR-NOTICE: Federal Register notice</div><a href="#detail-2">why this tier &rsaquo;</a></td><td>Defense Department; Navy Department</td><td><span class="chip">Federal Register</span><div class="muted">Notice</div></td><td style="white-space:nowrap">Sep 25, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Establishment of Department of Defense Federal Advisory Committees-Homeland Defense Board</div><div class="reason">Tier 2, rule T2-FR-NOTICE: Federal Register notice</div><a href="#detail-3">why this tier &rsaquo;</a></td><td>Defense Department; Defense Department</td><td><span class="chip">Federal Register</span><div class="muted">Notice</div></td><td style="white-space:nowrap">Sep 11, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Regulatory Agenda</div><div class="reason">Tier 2, rule T2-FR-NOTICE: Federal Register notice</div><a href="#detail-4">why this tier &rsaquo;</a></td><td>Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration</td><td><span class="chip">Federal Register</span><div class="muted">Notice</div></td><td style="white-space:nowrap">Aug 14, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award N6339426F4021 to COLOSSAL CONTRACTING LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-5">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Navy)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $81,306</div></td><td style="white-space:nowrap">Jul 9, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award W912HQ26CA041 to EATON CORPORATION</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-6">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Army)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $263,715</div></td><td style="white-space:nowrap">Jul 6, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award HTC71126CE129 to BOOZ ALLEN HAMILTON INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-7">why this tier &rsaquo;</a></td><td>Department of Defense (USTRANSCOM)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $13.7M</div></td><td style="white-space:nowrap">Jul 1, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864926P0246 to SNO CORP.</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-8">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $110,000</div></td><td style="white-space:nowrap">Jul 1, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864926P0140 to VALIDVOICE LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-9">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $74,627</div></td><td style="white-space:nowrap">Jun 30, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864926P0121 to INTELLIGENT WAVES LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-10">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $74,989</div></td><td style="white-space:nowrap">Jun 25, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864926P0034 to HOUNDDOG.AI, INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-11">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $74,653</div></td><td style="white-space:nowrap">Jun 22, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award N0018926FD063 to ENTERPRISE TECHNOLOGY SOLUTIONS, INC.</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-12">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Navy)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $329,546</div></td><td style="white-space:nowrap">Jun 2, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award W912HZ26CA020 to CLOUDFIT SOFTWARE, LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-13">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Army)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $621,000</div></td><td style="white-space:nowrap">May 15, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award SPE8EL26F1303 to ATLANTIC DIVING SUPPLY, INC.</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-14">why this tier &rsaquo;</a></td><td>Department of Defense (Defense Logistics Agency)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $4.3M</div></td><td style="white-space:nowrap">Feb 20, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award SPE8EL26F12XU to ATLANTIC DIVING SUPPLY, INC.</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-15">why this tier &rsaquo;</a></td><td>Department of Defense (Defense Logistics Agency)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $1.1M</div></td><td style="white-space:nowrap">Feb 18, 2026</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA561326F0042 to CARAHSOFT TECHNOLOGY CORP</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (BPA CALL)</div><a href="#detail-16">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">BPA CALL · $37,522</div></td><td style="white-space:nowrap">Dec 29, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA822226FB007 to CYKOR LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-17">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $6.9M</div></td><td style="white-space:nowrap">Dec 19, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA800326F0001 to CARAHSOFT TECHNOLOGY CORP</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (BPA CALL)</div><a href="#detail-18">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">BPA CALL · $4.3M</div></td><td style="white-space:nowrap">Nov 26, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award HQ003425CE074 to KONIAG IT SYSTEMS, LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-19">why this tier &rsaquo;</a></td><td>Department of Defense (Washington Headquarters Services)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $25.1M</div></td><td style="white-space:nowrap">Sep 6, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA489025F0076 to CREDENCE MANAGEMENT SOLUTIONS LIMITED LIABILITY COMPANY</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-20">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $6.7M</div></td><td style="white-space:nowrap">Aug 16, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864926P0180 to STEALTHPATH INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-21">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $75,000</div></td><td style="white-space:nowrap">Jun 30, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award W5170125CA131 to INTELLISENSE SYSTEMS INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-22">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Army)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $1.1M</div></td><td style="white-space:nowrap">May 1, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award W56KGU25C0006 to PERATON LABS INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-23">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Army)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $2.7M</div></td><td style="white-space:nowrap">Jan 30, 2025</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA873025PB006 to OVERHEAD INTELLIGENCE INC.</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-24">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $1.8M</div></td><td style="white-space:nowrap">Oct 31, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award W9127S24P0086 to STEALTHPATH INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-25">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Army)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $680,230</div></td><td style="white-space:nowrap">Sep 30, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award HC105024F0044 to AMAZON WEB SERVICES, INC.</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-26">why this tier &rsaquo;</a></td><td>Department of Defense (Defense Information Systems Agency)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $453,928</div></td><td style="white-space:nowrap">Sep 27, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA560624P0020 to BLASTWAVE INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-27">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $136,000</div></td><td style="white-space:nowrap">Aug 1, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award W912HQ24C0064 to FRAUNHOFER USA INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-28">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Army)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $587,561</div></td><td style="white-space:nowrap">Jul 31, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award HC108424C0005 to INTERNATIONAL BUSINESS MACHINES CORPORATION</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DEFINITIVE CONTRACT)</div><a href="#detail-29">why this tier &rsaquo;</a></td><td>Department of Defense (Defense Information Systems Agency)</td><td><span class="chip">USAspending</span><div class="muted">DEFINITIVE CONTRACT · $3.0M</div></td><td style="white-space:nowrap">Jun 28, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award HC102824F3000 to INNOVATION EVOLUTION TECHNOLOGIES JV, LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-30">why this tier &rsaquo;</a></td><td>Department of Defense (Defense Information Systems Agency)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $6.3M</div></td><td style="white-space:nowrap">May 28, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864924P0411 to LDIA HOLDINGS, LLC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-31">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $1.2M</div></td><td style="white-space:nowrap">Feb 7, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award N6523624F0142 to SERCO INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-32">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Navy)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $795,538</div></td><td style="white-space:nowrap">Jan 31, 2024</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA701423F0375 to KPMG LLP</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (DELIVERY ORDER)</div><a href="#detail-33">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">DELIVERY ORDER · $9.7M</div></td><td style="white-space:nowrap">Sep 29, 2023</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr><tr><td><span class="badge t2">Tier 2</span></td><td><div class="title">Award FA864923P1067 to ROWND INC</div><div class="reason">Tier 2, rule T2-AWARD: Contract award on USAspending (PURCHASE ORDER)</div><a href="#detail-34">why this tier &rsaquo;</a></td><td>Department of Defense (Department of the Air Force)</td><td><span class="chip">USAspending</span><div class="muted">PURCHASE ORDER · $1.2M</div></td><td style="white-space:nowrap">Sep 13, 2023</td><td><div class="ph"><b>Placeholder</b><br>Lead-time estimate not built</div></td></tr></table><div class="status">Last pull Oct 12, 01:23 UTC<span class="dot ok"></span>Federal Register: 5 records<span class="dot ok"></span>USAspending: 30 records<span class="dot ok"></span>SAM.gov: 0 records</div><h3 style="margin-top:28px">Signal detail (S2), one card per signal</h3>
+<div class="detail" id="detail-0">
+  <div class="muted">Feed &rsaquo; Federal Acquisition Regulation: Revolutionary FAR Overhaul Parts 8, 12, 13, 15, 38, 44, and 51</div>
+  <div style="margin:6px 0"><span class="badge t1">Tier 1</span> <h2>Federal Acquisition Regulation: Revolutionary FAR Overhaul Parts 8, 12, 13, 15, 38, 44, and 51</h2></div>
+  <div class="muted">Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration · Federal Register · Proposed Rule · Sep 18, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 1</h3>
+      <div>Rule <b>T1-PRORULE</b> placed it here: Federal Register proposed rule.</div>
+      <div class="quote"><b>Federal Register · Proposed Rule · Sep 18, 2026</b><br><q>OFPP, DoD, GSA, and NASA (collectively referred to as the Federal Acquisition Regulatory Council or FAR Council) are proposing to amend the Federal Acquisition Regulation (FAR) to implement Executive Order (E.O.) 14275, Restoring Common Sense to Federal Procurement. The E.O. directs the elimination of excessive acquisition regulations to stop the inefficient use of American taxpayer dollars. The FAR Council is issuing twelve proposed rules that collectively will streamline the FAR in its entirety. This rule proposes revisions to FAR parts 8, 12, 13, 15, 38, 44, 51, and 52.</q><br>
+        <a href="https://www.federalregister.gov/documents/2026/09/18/2026-19162/federal-acquisition-regulation-revolutionary-far-overhaul-parts-8-12-13-15-38-44-and-51" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-1">
+  <div class="muted">Feed &rsaquo; Federal Acquisition Regulation: Revolutionary Federal Acquisition Regulation Overhaul Parts 14, 28, 36, and 52</div>
+  <div style="margin:6px 0"><span class="badge t1">Tier 1</span> <h2>Federal Acquisition Regulation: Revolutionary Federal Acquisition Regulation Overhaul Parts 14, 28, 36, and 52</h2></div>
+  <div class="muted">Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration · Federal Register · Proposed Rule · Sep 18, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 1</h3>
+      <div>Rule <b>T1-PRORULE</b> placed it here: Federal Register proposed rule.</div>
+      <div class="quote"><b>Federal Register · Proposed Rule · Sep 18, 2026</b><br><q>OFPP, DoD, GSA, and NASA (collectively referred to as the Federal Acquisition Regulatory Council or FAR Council) are proposing to amend the Federal Acquisition Regulation (FAR) to implement Executive Order (E.O.) 14275, Restoring Common Sense to Federal Procurement. The E.O. directs the elimination of excessive acquisition regulations to stop the inefficient use of American taxpayer dollars. The FAR Council is issuing twelve proposed rules that collectively will streamline the FAR in its entirety. This rule proposes revisions to FAR parts 14, 28, 36, and 52.</q><br>
+        <a href="https://www.federalregister.gov/documents/2026/09/18/2026-19158/federal-acquisition-regulation-revolutionary-federal-acquisition-regulation-overhaul-parts-14-28-36" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-2">
+  <div class="muted">Feed &rsaquo; Privacy Act of 1974; System of Records</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Privacy Act of 1974; System of Records</h2></div>
+  <div class="muted">Defense Department; Navy Department · Federal Register · Notice · Sep 25, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-FR-NOTICE</b> placed it here: Federal Register notice.</div>
+      <div class="quote"><b>Federal Register · Notice · Sep 25, 2026</b><br><q>In accordance with the Privacy Act of 1974, the DoD is modifying and reissuing a current system of records titled, &quot;DON Child and Youth Program,&quot; NM01754-3. This system of records was originally established to verify children&#x27;s health and immunization status, determine program eligibility for children and families, and support childcare programs designed to meet their needs. This system of records notice (SORN) is being updated to align with current cybersecurity policies, guidelines, and regulations. These updates include incorporating the DoD standard routine uses (A through J) and [...]</q><br>
+        <a href="https://www.federalregister.gov/documents/2026/09/25/2026-19612/privacy-act-of-1974-system-of-records" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-3">
+  <div class="muted">Feed &rsaquo; Establishment of Department of Defense Federal Advisory Committees-Homeland Defense Board</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Establishment of Department of Defense Federal Advisory Committees-Homeland Defense Board</h2></div>
+  <div class="muted">Defense Department; Defense Department · Federal Register · Notice · Sep 11, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-FR-NOTICE</b> placed it here: Federal Register notice.</div>
+      <div class="quote"><b>Federal Register · Notice · Sep 11, 2026</b><br><q>The DoD (referred to herein as &quot;the Department of War&quot; or &quot;DoW&quot;) is publishing this notice to announce it is establishing the Homeland Defense Board (HDB) as a discretionary Federal advisory committee.</q><br>
+        <a href="https://www.federalregister.gov/documents/2026/09/11/2026-18517/establishment-of-department-of-defense-federal-advisory-committees-homeland-defense-board" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-4">
+  <div class="muted">Feed &rsaquo; Regulatory Agenda</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Regulatory Agenda</h2></div>
+  <div class="muted">Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration · Federal Register · Notice · Aug 14, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-FR-NOTICE</b> placed it here: Federal Register notice.</div>
+      <div class="quote"><b>Federal Register · Notice · Aug 14, 2026</b><br><q>This agenda provides summary descriptions of regulations being developed by the Federal Acquisition Regulatory Council in compliance with Executive Order 12866 &quot;Regulatory Planning and Review, as reaffirmed and amended in Executive Order 13563, &quot;Improving Regulation and Regulatory Review.&quot; This agenda is being published to allow interested people an opportunity to participate in the rulemaking process. Additionally, members of the public can track the progress of any open and pending Federal Acquisition Regulation (FAR) rule via the &quot;Open FAR Cases&quot; report, which is publicly available at [...]</q><br>
+        <a href="https://www.federalregister.gov/documents/2026/08/14/2026-16612/regulatory-agenda" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-5">
+  <div class="muted">Feed &rsaquo; Award N6339426F4021 to COLOSSAL CONTRACTING LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award N6339426F4021 to COLOSSAL CONTRACTING LLC</h2></div>
+  <div class="muted">Department of Defense (Department of the Navy) · USAspending · DELIVERY ORDER · $81,306 · Jul 9, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Jul 9, 2026</b><br><q>PROCUREMENT REQUEST FOR A ONE-YEAR RENEWAL OF RUBRIK PROPRIETARY, ON-PREMISE MAINTENANCE AND SUPPORT SERVICES, WHICH IS ESSENTIAL FOR NSWC PHD EXISTING RUBRIK HARDWARE APPLIANCES. RUBRIK MISSION SECURE WORLD DATA PROVIDING ZERO TRUST DATA SECURITY.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_N6339426F4021_9700_NNG15SD72B_8000" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-6">
+  <div class="muted">Feed &rsaquo; Award W912HQ26CA041 to EATON CORPORATION</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award W912HQ26CA041 to EATON CORPORATION</h2></div>
+  <div class="muted">Department of Defense (Department of the Army) · USAspending · DEFINITIVE CONTRACT · $263,715 · Jul 6, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · Jul 6, 2026</b><br><q>ESTCP EW25-9704 ZERO TRUST - DEMONSTRATION OF A ZERO TRUST CYBER SECURITY SOLUTION FOR OPERATIONAL TECHNOLOGIES IN CRITICAL ENERGY INFRASTRUCTURE.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_W912HQ26CA041_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-7">
+  <div class="muted">Feed &rsaquo; Award HTC71126CE129 to BOOZ ALLEN HAMILTON INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award HTC71126CE129 to BOOZ ALLEN HAMILTON INC</h2></div>
+  <div class="muted">Department of Defense (USTRANSCOM) · USAspending · DEFINITIVE CONTRACT · $13.7M · Jul 1, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · Jul 1, 2026</b><br><q>THIS REQUIREMENT IS FOR AOIS 2 AND 3 OF THE ITEM COMMERCIAL SOLUTIONS OPENING (CSO) CALL 001 FOR USTRANSCOM ZERO TRUST ENTERPRISE MODERNIZATION AND OPTIMIZATION.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_HTC71126CE129_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-8">
+  <div class="muted">Feed &rsaquo; Award FA864926P0246 to SNO CORP.</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864926P0246 to SNO CORP.</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $110,000 · Jul 1, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Jul 1, 2026</b><br><q>AI-ENHANCED DATA VAULT: A ZERO-TRUST PLATFORM FOR MULTI-DOMAIN SITUATIONAL AWARENESS</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864926P0246_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-9">
+  <div class="muted">Feed &rsaquo; Award FA864926P0140 to VALIDVOICE LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864926P0140 to VALIDVOICE LLC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $74,627 · Jun 30, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Jun 30, 2026</b><br><q>V2SHIELD: ARTIFICIAL INTELLIGENCE-RESILIENT 5-FACTOR AUTHENTICATION FOR ZERO-TRUST AND DISCONNECTED ENVIRONMENTS</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864926P0140_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-10">
+  <div class="muted">Feed &rsaquo; Award FA864926P0121 to INTELLIGENT WAVES LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864926P0121 to INTELLIGENT WAVES LLC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $74,989 · Jun 25, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Jun 25, 2026</b><br><q>EPHEMERAL PARTNER COLLABORATION ENVIRONMENT-PLUS: AN EPHEMERAL, AI-ORCHESTRATED ZERO-TRUST ENVIRONMENT FOR TACTICAL COALITION COLLABORATION</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864926P0121_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-11">
+  <div class="muted">Feed &rsaquo; Award FA864926P0034 to HOUNDDOG.AI, INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864926P0034 to HOUNDDOG.AI, INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $74,653 · Jun 22, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Jun 22, 2026</b><br><q>OPERATIONALIZING PRIVACY-BY-DESIGN AND ZERO TRUST THROUGH DATA MINIMIZATION IN TRADITIONAL AND AI-BASED APPLICATIONS</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864926P0034_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-12">
+  <div class="muted">Feed &rsaquo; Award N0018926FD063 to ENTERPRISE TECHNOLOGY SOLUTIONS, INC.</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award N0018926FD063 to ENTERPRISE TECHNOLOGY SOLUTIONS, INC.</h2></div>
+  <div class="muted">Department of Defense (Department of the Navy) · USAspending · DELIVERY ORDER · $329,546 · Jun 2, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Jun 2, 2026</b><br><q>ZERO TRUST CYBERSECURITY NETWORK ARCHITECTURE - MANAGEENGINE ENDPOINT CENTRAL SOFTWARE SUITE TO BE USED ON JOINT STAFF J6 C3OD2 PROJECT NETWORKS.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_N0018926FD063_9700_NNG15SD76B_8000" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-13">
+  <div class="muted">Feed &rsaquo; Award W912HZ26CA020 to CLOUDFIT SOFTWARE, LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award W912HZ26CA020 to CLOUDFIT SOFTWARE, LLC</h2></div>
+  <div class="muted">Department of Defense (Department of the Army) · USAspending · DEFINITIVE CONTRACT · $621,000 · May 15, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · May 15, 2026</b><br><q>SBIR PHASE III CONTRACT WITH CLOUDFIT SOFTWARE, LLC (CAGE CODE 7Q6J0) FOR HPCMP GOVERNMENT TENANT FOR ZERO TRUST LICENSES</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_W912HZ26CA020_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-14">
+  <div class="muted">Feed &rsaquo; Award SPE8EL26F1303 to ATLANTIC DIVING SUPPLY, INC.</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award SPE8EL26F1303 to ATLANTIC DIVING SUPPLY, INC.</h2></div>
+  <div class="muted">Department of Defense (Defense Logistics Agency) · USAspending · DELIVERY ORDER · $4.3M · Feb 20, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Feb 20, 2026</b><br><q>4570916353!ZERO TRUST INTEGRATED SYSTEM</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_SPE8EL26F1303_9700_SPE8EJ21D0020_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-15">
+  <div class="muted">Feed &rsaquo; Award SPE8EL26F12XU to ATLANTIC DIVING SUPPLY, INC.</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award SPE8EL26F12XU to ATLANTIC DIVING SUPPLY, INC.</h2></div>
+  <div class="muted">Department of Defense (Defense Logistics Agency) · USAspending · DELIVERY ORDER · $1.1M · Feb 18, 2026 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Feb 18, 2026</b><br><q>4570899897!NETWORK OPERATIONS FORTINET ZERO TRUST F</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_SPE8EL26F12XU_9700_SPE8EJ21D0020_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-16">
+  <div class="muted">Feed &rsaquo; Award FA561326F0042 to CARAHSOFT TECHNOLOGY CORP</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA561326F0042 to CARAHSOFT TECHNOLOGY CORP</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · BPA CALL · $37,522 · Dec 29, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (BPA CALL).</div>
+      <div class="quote"><b>USAspending · BPA CALL · Dec 29, 2025</b><br><q>ANNUAL LICENSES FOR FORESCOUT COMPLY-TO-CONNECT ZERO TRUST SOLUTION FOR AIR COMPONENT BATTLE NETWORK (ACBN).</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA561326F0042_9700_N6600124A0003_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-17">
+  <div class="muted">Feed &rsaquo; Award FA822226FB007 to CYKOR LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA822226FB007 to CYKOR LLC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · DELIVERY ORDER · $6.9M · Dec 19, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Dec 19, 2025</b><br><q>TO PURCHASE ZERO TRUST HW AND SW PACKAGE. PLEASE SEE ATTACHED EL FOR SPECIFICATIONS.  PARTIAL DELIVERIES ARE ACCEPTABLE.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA822226FB007_9700_NNG15SD66B_8000" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-18">
+  <div class="muted">Feed &rsaquo; Award FA800326F0001 to CARAHSOFT TECHNOLOGY CORP</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA800326F0001 to CARAHSOFT TECHNOLOGY CORP</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · BPA CALL · $4.3M · Nov 26, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (BPA CALL).</div>
+      <div class="quote"><b>USAspending · BPA CALL · Nov 26, 2025</b><br><q>THIS CONTRACT IS FOR THE PROCUREMENT OF FORESCOUT ADOPTION EXPERTISE ADVANCED SUPPORT, FORESCOUT COMPLY TO CONNECT (C2C) CORE TERM LICENSE BUNDLES. THIS IS TO ENSURE COMPLIANCE WITH DOD CISO, WHICH IS VITAL TO REALIZING THE DODS ZERO TRUST GOALS.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA800326F0001_9700_N6600124A0003_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-19">
+  <div class="muted">Feed &rsaquo; Award HQ003425CE074 to KONIAG IT SYSTEMS, LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award HQ003425CE074 to KONIAG IT SYSTEMS, LLC</h2></div>
+  <div class="muted">Department of Defense (Washington Headquarters Services) · USAspending · DEFINITIVE CONTRACT · $25.1M · Sep 6, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · Sep 6, 2025</b><br><q>SPECIALIZED SERVICES TO SUPPORT CYBERSECURITY AND THE ZERO TRUST PORTFOLIO MANAGEMENT OFFICE FOR THE DEPUTY CHIEF INFORMATION OFFICER.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_HQ003425CE074_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-20">
+  <div class="muted">Feed &rsaquo; Award FA489025F0076 to CREDENCE MANAGEMENT SOLUTIONS LIMITED LIABILITY COMPANY</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA489025F0076 to CREDENCE MANAGEMENT SOLUTIONS LIMITED LIABILITY COMPANY</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · DELIVERY ORDER · $6.7M · Aug 16, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Aug 16, 2025</b><br><q>DEPARTMENT OF THE AIR FORCE (DAF) ZERO TRUST (ZT) FUNCTIONAL MANAGEMENT OFFICE (FMO) SUPPORT SERVICES.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA489025F0076_9700_47QRCA25DU090_4732" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-21">
+  <div class="muted">Feed &rsaquo; Award FA864926P0180 to STEALTHPATH INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864926P0180 to STEALTHPATH INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $75,000 · Jun 30, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Jun 30, 2025</b><br><q>ON-PREMISE DECENTRALIZED NETWORK SECURITY: A ZERO TRUST-COMPLIANT SOLUTION</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864926P0180_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-22">
+  <div class="muted">Feed &rsaquo; Award W5170125CA131 to INTELLISENSE SYSTEMS INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award W5170125CA131 to INTELLISENSE SYSTEMS INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Army) · USAspending · DEFINITIVE CONTRACT · $1.1M · May 1, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · May 1, 2025</b><br><q>SMALL BUSINESS INNOVATION RESEARCH (SBIR) PHASE II, TOPIC A 23-009, ZERO TRUST IDENTITY. PHASE I SBIR CONTRACT NO. W56KGU-24-C-0002</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_W5170125CA131_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-23">
+  <div class="muted">Feed &rsaquo; Award W56KGU25C0006 to PERATON LABS INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award W56KGU25C0006 to PERATON LABS INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Army) · USAspending · DEFINITIVE CONTRACT · $2.7M · Jan 30, 2025 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · Jan 30, 2025</b><br><q>THIS CONTRACT AWARD TACTICAL ZERO TRUST (TZT) SUPPORTS ARMY NETWORK DEFENSE: FOCUSED ON ARMY TACTICAL NETWORKS TECHNOLOGIES, UNDERSTANDING OF THE ZERO TRUST FRAMEWORK AND ITS PRINCIPLES, VERIFYING TRUST AND AUTHORIZATION FOR EVERY USER AND DEVICE.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_W56KGU25C0006_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-24">
+  <div class="muted">Feed &rsaquo; Award FA873025PB006 to OVERHEAD INTELLIGENCE INC.</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA873025PB006 to OVERHEAD INTELLIGENCE INC.</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $1.8M · Oct 31, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Oct 31, 2024</b><br><q>SBIR P2 COMMERCIAL-BASED FRAMEWORK FOR ZERO-TRUST AUTONOMOUS DRONE SWARMING</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA873025PB006_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-25">
+  <div class="muted">Feed &rsaquo; Award W9127S24P0086 to STEALTHPATH INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award W9127S24P0086 to STEALTHPATH INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Army) · USAspending · PURCHASE ORDER · $680,230 · Sep 30, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Sep 30, 2024</b><br><q>UCIC-MCX PROCUREMENT OF HARDWARE AND IMPLEMENTATION GUIDANCE SERVICES FOR A CRITICAL INFRASTRUCTURE ZERO TRUST SOLUTION.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_W9127S24P0086_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-26">
+  <div class="muted">Feed &rsaquo; Award HC105024F0044 to AMAZON WEB SERVICES, INC.</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award HC105024F0044 to AMAZON WEB SERVICES, INC.</h2></div>
+  <div class="muted">Department of Defense (Defense Information Systems Agency) · USAspending · DELIVERY ORDER · $453,928 · Sep 27, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Sep 27, 2024</b><br><q>ZERO TRUST GOVERNANCE COMMERCIAL CLOUD LAB &amp; ASSESSMENT TOOL</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_HC105024F0044_9700_HC105023D0005_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-27">
+  <div class="muted">Feed &rsaquo; Award FA560624P0020 to BLASTWAVE INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA560624P0020 to BLASTWAVE INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $136,000 · Aug 1, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Aug 1, 2024</b><br><q>PHASE III ZERO TRUST CYBERSECURITY SOLUTION FOR THE SPANGDAHLEM AIR BASE.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA560624P0020_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-28">
+  <div class="muted">Feed &rsaquo; Award W912HQ24C0064 to FRAUNHOFER USA INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award W912HQ24C0064 to FRAUNHOFER USA INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Army) · USAspending · DEFINITIVE CONTRACT · $587,561 · Jul 31, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · Jul 31, 2024</b><br><q>AWARD OF ESTCP PROJECT EW23-7876.   TITLE: MANAGED BACNET - INTEROPERABLE ZERO-TRUST SECURITY FOR FACILITY RELATED CONTROL SYSTEMS.   PURPOSE: DEMONSTRATE MODERN AND INTEROPERABLE ZERO-TRUST CYBERSECURITY FOR DOD NETWORKS.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_W912HQ24C0064_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-29">
+  <div class="muted">Feed &rsaquo; Award HC108424C0005 to INTERNATIONAL BUSINESS MACHINES CORPORATION</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award HC108424C0005 to INTERNATIONAL BUSINESS MACHINES CORPORATION</h2></div>
+  <div class="muted">Department of Defense (Defense Information Systems Agency) · USAspending · DEFINITIVE CONTRACT · $3.0M · Jun 28, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DEFINITIVE CONTRACT).</div>
+      <div class="quote"><b>USAspending · DEFINITIVE CONTRACT · Jun 28, 2024</b><br><q>IBM ZERO TRUST COMPLIANCY SOLUTION</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_HC108424C0005_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-30">
+  <div class="muted">Feed &rsaquo; Award HC102824F3000 to INNOVATION EVOLUTION TECHNOLOGIES JV, LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award HC102824F3000 to INNOVATION EVOLUTION TECHNOLOGIES JV, LLC</h2></div>
+  <div class="muted">Department of Defense (Defense Information Systems Agency) · USAspending · DELIVERY ORDER · $6.3M · May 28, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · May 28, 2024</b><br><q>ZERO TRUST ARCHITECTURE (ZTA) SUPPORT</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_HC102824F3000_9700_HC104719D2029_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-31">
+  <div class="muted">Feed &rsaquo; Award FA864924P0411 to LDIA HOLDINGS, LLC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864924P0411 to LDIA HOLDINGS, LLC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $1.2M · Feb 7, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Feb 7, 2024</b><br><q>ZERO TRUST ARCHITECTURE SECURITY SYSTEM VIDEO SCENE AUTHENTICATION</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864924P0411_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-32">
+  <div class="muted">Feed &rsaquo; Award N6523624F0142 to SERCO INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award N6523624F0142 to SERCO INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Navy) · USAspending · DELIVERY ORDER · $795,538 · Jan 31, 2024 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Jan 31, 2024</b><br><q>ONE-NET ZERO TRUST NETWORK ARCHITECTURE PILOT, PKI SERVER TECHNICAL REFRESH, DOMAIN CONTROLLER TECHNICAL REFRESH, EMBEDDED RELEASABLE TECHNICAL REFRESH, FORESCOUT DESIGN TASKS, AND INSTALLATION OF EQUIPMENT AND SERVICES AT MULTIPLE OCONUS SITES</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_N6523624F0142_9700_N0003919D0015_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-33">
+  <div class="muted">Feed &rsaquo; Award FA701423F0375 to KPMG LLP</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA701423F0375 to KPMG LLP</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · DELIVERY ORDER · $9.7M · Sep 29, 2023 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (DELIVERY ORDER).</div>
+      <div class="quote"><b>USAspending · DELIVERY ORDER · Sep 29, 2023</b><br><q>PKS-HILL-BECK-AFSTS FA701423STS43 HQ CCC ZERO TRUST TRANSITION TEAM (ZTTT) CONTRACT SUPPORT TASK ORDER AWARD.</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA701423F0375_9700_FA701420D0009_9700" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+<div class="detail" id="detail-34">
+  <div class="muted">Feed &rsaquo; Award FA864923P1067 to ROWND INC</div>
+  <div style="margin:6px 0"><span class="badge t2">Tier 2</span> <h2>Award FA864923P1067 to ROWND INC</h2></div>
+  <div class="muted">Department of Defense (Department of the Air Force) · USAspending · PURCHASE ORDER · $1.2M · Sep 13, 2023 · retrieved Oct 12, 01:23 UTC</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Why this is Tier 2</h3>
+      <div>Rule <b>T2-AWARD</b> placed it here: Contract award on USAspending (PURCHASE ORDER).</div>
+      <div class="quote"><b>USAspending · PURCHASE ORDER · Sep 13, 2023</b><br><q>AIRMEN ADAPTIVE ZERO-TRUST AUTHENTICATION PLATFORM FOR WEBSITE AND MOBILE APPLICATIONS</q><br>
+        <a href="https://www.usaspending.gov/award/CONT_AWD_FA864923P1067_9700_-NONE-_-NONE-" target="_blank">Open source document &#8599;</a></div>
+      <div class="ph"><b>Placeholder: LLM rationale.</b> A later version drafts a short rationale from the quoted
+        passage only, with a "does this match the source?" check. Not built in this prototype.</div>
+    </div>
+    <div class="card">
+      <h3>Estimated lead time</h3>
+      <div class="ph"><b>Placeholder: lead-time estimate.</b> Not built in this prototype. It needs pilot history
+        before it can show an honest range.</div>
+    </div>
+  </div>
+  <div class="foot">No model output on this page. The text is quoted from the source record and the tier comes from a written rule.</div>
+</div>
+</div></div></body></html>

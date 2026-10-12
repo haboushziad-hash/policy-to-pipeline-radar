@@ -1,0 +1,10 @@
+# Raw API pulls stay local; they can be regenerated from the notebook
+data/raw/
+# Reviewer feedback stays local
+data/feedback/
+# Secrets never go in the repo (the SAM.gov key lives in a conda env variable)
+.env
+# Local environments and Jupyter scratch
+.venv/
+.ipynb_checkpoints/
+__pycache__/
