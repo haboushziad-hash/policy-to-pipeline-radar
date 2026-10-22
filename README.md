@@ -27,7 +27,7 @@ The Radar pulls public federal signals about zero trust work at the Department o
 
 - **Evidence tier (navy):** the notebook's plain rules, unchanged.
 - **AI relevance read (blue):** Prompt 8 in `PROMPTS.md`, run three times. Confidence is how many runs agree: 3 of 3, 2 of 3, or no two.
-- **Accuracy:** the AI read compared with hand labels in `data/ai_read/human_labels.json`, made before looking at the AI output.
+- **Accuracy:** the AI read compared with hand labels in `data/ai_read/human_labels.json` (all 35 records, one analyst). The check is not fully blind; the site's method note says why. A lazy baseline (call everything the most common label) is shown next to it.
 - **Disagree flags:** kept in the visitor's browser and downloadable as CSV. Nothing changes a tier or an AI read automatically.
 
 To rebuild the site data after a new run: `python scripts/build_site_data.py`.

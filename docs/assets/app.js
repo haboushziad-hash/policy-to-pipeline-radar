@@ -386,15 +386,21 @@
     });
     cm += "</table>";
     const misses = labeled.filter((s) => s.human !== s.ai.label);
+    // A lazy baseline: always give the analyst's most common label. The AI read has to beat this to be worth showing.
+    const counts = {}; labeled.forEach((s) => { counts[s.human] = (counts[s.human] || 0) + 1; });
+    const top = Object.keys(counts).sort((x, y) => counts[y] - counts[x])[0];
+    const rest = labeled.filter((s) => s.human !== top);
+    const restHits = rest.filter((s) => s.human === s.ai.label).length;
+    const baseline = '<div class="callout info" style="margin:0 0 18px"><b>For scale:</b> a lazy rule that calls every record ' + esc(top) + ", the analyst's most common answer, would match " + counts[top] + " of " + labeled.length + " (" + Math.round((100 * counts[top]) / labeled.length) + "%). The AI read earns its place on the other " + rest.length + " records, the ones the analyst rated something other than " + esc(top) + ": it matched " + restHits + " of them, and the lazy rule matches none.</div>";
     el.innerHTML =
-      '<div class="acc-top">' + confBlock + '<div class="metric"><div class="big">' + hits.length + " <small>of " + labeled.length + '</small></div><div class="lbl">AI read matched the analyst (' + pct + "%)</div></div></div>" +
+      '<div class="acc-top">' + confBlock + '<div class="metric"><div class="big">' + hits.length + " <small>of " + labeled.length + '</small></div><div class="lbl">AI read matched the analyst (' + pct + "%)</div></div></div>" + baseline +
       '<div class="acc-grid"><div class="card"><h4>Does confidence earn trust?</h4><table class="plain"><tr><th>AI confidence</th><th class="num">Signals</th><th class="num">Matched analyst</th><th></th></tr>' +
         byConf.map((r) => "<tr><td>" + confName[r.c] + '</td><td class="num">' + r.n + '</td><td class="num">' + (r.n ? r.h + " (" + Math.round((100 * r.h) / r.n) + "%)" : "n/a") + '</td><td><div class="bar"><span style="width:' + (r.n ? (100 * r.h) / r.n : 0) + '%"></span></div></td></tr>').join("") +
         '</table><p class="conf-text" style="margin:10px 0 0">If high-confidence reads match the analyst more often than the rest, the dots are telling you something real. With ' + labeled.length + " records this is a first look, not a measured rate.</p></div>" +
       '<div class="card"><h4>Where they agreed and where they did not</h4>' + cm + "</div></div>" +
       '<div class="card" style="margin-top:4px"><h4>Every miss (' + misses.length + ")</h4>" +
         (misses.length ? '<ul class="misslist">' + misses.map((s) => '<li><button type="button" data-open="' + s.n + '">' + esc(s.title) + "</button><br>Analyst: <b>" + esc(s.human) + "</b> · AI: <b>" + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) + "</b> (" + esc(confName[s.ai.confidence]) + ")</li>").join("") + "</ul>" : "<p>None.</p>") +
-        '<p class="conf-text" style="margin:8px 0 0">Method: one analyst (the product owner) labeled ' + (labeled.length === SIGNALS.length ? "all " + labeled.length : labeled.length + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear. The check is not fully blind: the AI reads for four records (1, 7, 8, and 15) had already appeared in design screenshots, and the labeling guide was written after the AI runs. Treat the match rate as a first look." + (labeled.length < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p></div>";
+        '<p class="conf-text" style="margin:8px 0 0">Method: one analyst (the product owner) labeled ' + (labeled.length === SIGNALS.length ? "all " + labeled.length : labeled.length + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear. The check is not fully blind: the AI reads for four records (1, 7, 8, and 15) had already appeared in design screenshots, and the labeling guide was written after the AI runs. The analyst also saw fuller public record details (contracting office, industry and product codes, period of performance) that the AI read did not. Treat the match rate as a first look." + (labeled.length < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p></div>";
   }
 
   // ---------- landing preview: one real signal, explained ----------

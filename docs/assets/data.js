@@ -9,7 +9,7 @@ window.RADAR = {
    "USAspending": 30,
    "SAM.gov": 0
   },
-  "human_labeled": 0
+  "human_labeled": 35
  },
  "signals": [
   {
@@ -46,7 +46,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Low"
   },
   {
    "source": "federal_register",
@@ -82,7 +82,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Low"
   },
   {
    "source": "federal_register",
@@ -118,7 +118,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Unclear"
   },
   {
    "source": "federal_register",
@@ -154,7 +154,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Unclear"
   },
   {
    "source": "federal_register",
@@ -190,7 +190,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Low"
   },
   {
    "source": "usaspending",
@@ -226,7 +226,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -262,7 +262,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -298,7 +298,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -334,7 +334,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -370,7 +370,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -406,7 +406,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -442,7 +442,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -478,7 +478,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -514,7 +514,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Medium"
   },
   {
    "source": "usaspending",
@@ -550,7 +550,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -586,7 +586,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Medium"
   },
   {
    "source": "usaspending",
@@ -622,7 +622,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -658,7 +658,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -694,7 +694,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -730,7 +730,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -766,7 +766,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -802,7 +802,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -838,7 +838,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -874,7 +874,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -910,7 +910,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Medium"
   },
   {
    "source": "usaspending",
@@ -946,7 +946,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -982,7 +982,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1018,7 +1018,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1054,7 +1054,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1090,7 +1090,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1126,7 +1126,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1162,7 +1162,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "Medium"
   },
   {
    "source": "usaspending",
@@ -1198,7 +1198,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1234,7 +1234,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   },
   {
    "source": "usaspending",
@@ -1270,7 +1270,7 @@ window.RADAR = {
      }
     ]
    },
-   "human": null
+   "human": "High"
   }
  ]
 };
