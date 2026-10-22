@@ -6,7 +6,7 @@
 <title>Policy to Pipeline Radar</title>
 <meta name="description" content="A working prototype that finds DoD zero trust signals in public federal records. Each signal shows its rule-based evidence tier, an AI relevance read with how often three runs agreed, and its source.">
 <link rel="preload" href="assets/fonts/ibm-plex-sans-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=20261022c">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%231f3a5f' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%231f3a5f' stroke-width='2'/%3E%3Ccircle cx='21' cy='10' r='3' fill='%2318222e'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -29,51 +29,78 @@
 </header>
 
 <main id="top">
-<!-- ===================== HERO: intro + radar ===================== -->
+<!-- ===================== LANDING ===================== -->
 <section class="hero" aria-labelledby="hero-h">
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
       <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work, the security approach that verifies every user and device instead of trusting anything inside the network. Every call shows its reason, how often three AI reads agreed, and a link to the source.</p>
       <p class="who">Built for capture managers, the people at a federal contractor who decide which bids are worth chasing. The goal is to spot likely work before a solicitation posts. This prototype covers the first step: finding the signals and explaining each one.</p>
-      <div class="cta"><a class="btn primary" href="#radar">Browse the 35 signals</a><a class="textlink" href="#test">Try the 10-minute test</a></div>
+      <div class="cta">
+        <a class="btn primary" href="#radar">Browse the 35 signals</a>
+        <a class="btn" href="#test">Try the 10-minute test</a>
+      </div>
+      <p class="course">A course prototype for MPIM 6750, Developing and Managing AI Products, Georgetown University.</p>
     </div>
+
     <figure class="scope" aria-labelledby="scope-cap">
       <div class="scope-box">
         <svg id="scope" viewBox="0 0 600 600" role="img" aria-labelledby="scope-title scope-desc">
           <title id="scope-title">Radar plot of the 35 signals</title>
-          <desc id="scope-desc">Each mark is one public record. Each wedge holds one DoD component, and Federal Register documents get their own wedge. Distance from the center shows age. Fill color shows the AI relevance read. Click a mark or a wedge. The same records are listed below the plot as text.</desc>
+          <desc id="scope-desc">Each mark is one public record. Each wedge holds one DoD component, and Federal Register documents get their own wedge. Distance from the center shows age. Fill color shows the AI relevance read. Click a mark to open its record, or a wedge to filter the list. The same records are listed below as text.</desc>
         </svg>
         <div class="sweep" id="sweep" aria-hidden="true"></div>
         <div class="tip" id="tip" role="status" aria-live="polite"></div>
       </div>
       <figcaption id="scope-cap">
-        <div class="scope-status"><span id="scope-count"></span><button class="linkbtn" id="sweep-toggle" type="button" aria-pressed="false">Pause sweep</button></div>
         <dl class="key">
           <div><dt>Shape</dt><dd><span><i class="g sq"></i>Federal Register document</span><span><i class="g ci"></i>Contract award</span></dd></div>
           <div><dt>Fill</dt><dd><span><i class="g ci f-high"></i>AI read High</span><span><i class="g ci f-med"></i>Medium</span><span><i class="g ci f-low"></i>Low</span><span><i class="g ci f-unc"></i>Unclear or split</span></dd></div>
           <div><dt>Ring</dt><dd><span><i class="g ci f-high look"></i>Needs a human look</span></dd></div>
         </dl>
+        <div class="scope-foot">
+          <span>The center is the Oct 11, 2026 snapshot, and each ring out is older. No award sits inside the 90-day ring, which fits the 90-day delay on DoD contract data in USAspending. Click a wedge to filter the list.</span>
+          <button class="linkbtn" id="sweep-toggle" type="button" aria-pressed="false">Pause sweep</button>
+        </div>
       </figcaption>
     </figure>
   </div>
+
   <div class="wrap">
-    <div class="notes" aria-labelledby="notes-h">
-      <h2 class="notes-h" id="notes-h">Reading the radar</h2>
-      <p><b>How to read it.</b> Each wedge holds one DoD component, and Federal Register documents get their own; click a wedge to filter the list below. Distance from the center is age, counted back from the Oct 11, 2026 snapshot to an award's start date or a document's publication date. The amber ring means the three AI reads were not unanimous, the AI answered Unclear, or a Tier 1 record reads Low. Marks shift slightly so none hides another. Blue only ever means AI.</p>
-      <p><b>Where the rule and the AI disagree.</b> The two proposed FAR overhaul rules sit in the strongest evidence tier, yet all three AI reads rated them Low. Ranking them first would mislead a capture manager, so both carry the amber ring. <button class="linkbtn" type="button" id="show-far">Show the two rules</button></p>
-      <p><b>The 90-day ring.</b> No award sits inside it, which fits the 90-day delay on DoD contract data in USAspending. The newest marks are all Federal Register documents.</p>
-    </div>
+    <ol class="flow" aria-label="How the Radar works">
+      <li class="f-src"><b>Pull public records</b><span>Federal Register rules and notices, USAspending awards, and SAM.gov opportunities. Nothing internal or paid.</span></li>
+      <li class="f-rule"><b>Rules assign an evidence tier</b><span>Plain rules rank each record by the type of evidence it is, and the rule is written next to it. No AI here.</span></li>
+      <li class="f-ai"><b>AI reads for relevance, three times</b><span>Claude calls each record High, Medium, Low, or Unclear three separate times. Confidence is how often the reads agree.</span></li>
+      <li class="f-you"><b>You make the call</b><span>Open any signal for the source text and every AI read, and flag anything wrong. Nothing changes on its own.</span></li>
+    </ol>
   </div>
 </section>
 
-<!-- ===================== SIGNAL LIST ===================== -->
+<!-- ===================== DISAGREEMENT STORY ===================== -->
+<section class="story" aria-labelledby="story-h">
+  <div class="wrap story-grid">
+    <div>
+      <h2 id="story-h">When the rule and the AI disagree, the Radar says so.</h2>
+      <p>A tier measures what kind of evidence a record is. It says nothing about whether the record matters to zero trust work. The two FAR overhaul rules are the clearest case: proposed rules sit in the strongest tier, yet all three AI reads rated them Low. Ranking them first would mislead a capture manager, so the Radar flags them for a person instead.</p>
+      <p class="story-act"><button class="linkbtn" type="button" id="show-far">Show the two rules in the list</button></p>
+    </div>
+    <div class="pv" id="preview" aria-label="Example: one signal, explained"></div>
+  </div>
+</section>
+
+<!-- ===================== SIGNALS ===================== -->
 <section class="block" id="radar" aria-labelledby="radar-h">
   <div class="wrap">
     <div class="head">
       <h2 id="radar-h">The signals</h2>
       <p class="sub">35 real records from the October 11, 2026 run. Open any row for the source text, the rule behind its tier, all three AI reads, and a way to disagree.</p>
     </div>
+
+    <dl class="legend" aria-label="How to read a row">
+      <div><dt><span class="badge t1">Tier 1</span><span class="badge t2">Tier 2</span></dt><dd><b>Evidence tier.</b> Set by a plain rule, never by the AI. Tier badges are always navy.</dd></div>
+      <div><dt><span class="airead"><span class="tag">AI</span>High <span class="dots" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span></span></span></dt><dd><b>AI relevance read.</b> Blue only ever means AI. Filled dots show how many of the three reads agreed.</dd></div>
+      <div><dt><span class="flag">Check this one</span></dt><dd><b>Needs a human look.</b> The three reads were not unanimous, the AI answered Unclear, or a Tier 1 record reads Low.</dd></div>
+    </dl>
 
     <div class="ask" id="ask">
       <form id="ask-form" autocomplete="off">
@@ -115,9 +142,11 @@
       </select></label>
     </div>
     <div class="countline"><span><span id="count" aria-live="polite"></span> <button class="linkbtn" id="f-reset" type="button">Reset filters</button></span><span class="active-chips" id="active-chips"></span></div>
-    <p class="rowkey">Tier badges are navy and set by plain rules, never by the AI. Filled dots show how many of the three AI reads agreed.</p>
 
     <div class="feed" role="table" aria-label="Signals" id="feed-start" tabindex="-1">
+      <div class="feed-head" role="row">
+        <span role="columnheader">Evidence</span><span role="columnheader">Signal</span><span role="columnheader">AI read</span><span role="columnheader">Agency</span><span role="columnheader">Date</span><span role="columnheader" class="r">Amount</span>
+      </div>
       <div id="feed" role="rowgroup"></div>
     </div>
 
@@ -171,12 +200,6 @@
       <h2 id="about-h">How it works, and what it cannot do</h2>
       <p class="sub">Rules and AI stay in separate lanes, so a reader can always tell which one made a call.</p>
     </div>
-    <ol class="flow" aria-label="How the Radar works">
-      <li class="f-src"><b>Pull public records</b><span>Federal Register rules and notices, USAspending awards, and SAM.gov opportunities. Nothing internal or paid.</span></li>
-      <li class="f-rule"><b>Rules assign an evidence tier</b><span>Plain rules rank each record by the type of evidence it is, and the rule is written next to it. No AI here.</span></li>
-      <li class="f-ai"><b>AI reads for relevance, three times</b><span>Claude calls each record High, Medium, Low, or Unclear three separate times. Confidence is how often the reads agree.</span></li>
-      <li class="f-you"><b>You make the call</b><span>Open any signal for the source text and every AI read, and flag anything wrong. Nothing changes on its own.</span></li>
-    </ol>
     <div class="about-grid">
       <section class="lane rule-lane" aria-labelledby="ab1">
         <h3 id="ab1">Evidence tiers, set by rules</h3>
@@ -241,7 +264,7 @@
   <div class="dlg-body" id="dlg-body"></div>
 </dialog>
 
-<script src="assets/data.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/data.js?v=20261022c"></script>
+<script src="assets/app.js?v=20261022c"></script>
 </body>
 </html>

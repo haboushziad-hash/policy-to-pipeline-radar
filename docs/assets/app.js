@@ -224,8 +224,14 @@
     sweep.style.animation = "none"; void sweep.offsetWidth; sweep.style.animation = "";
     $$(".blip .ping", svg).forEach((c) => { c.style.animationName = "none"; void c.getBoundingClientRect(); c.style.animationName = ""; });
     const tog = $("#sweep-toggle");
-    if (REDUCED) { tog.hidden = true; return; }
+    if (REDUCED) { tog.textContent = "Play sweep"; tog.setAttribute("aria-pressed", "true"); }
     tog.addEventListener("click", () => {
+      if (REDUCED && !box.classList.contains("motion")) {
+        box.classList.add("motion");
+        sweep.style.animation = "none"; void sweep.offsetWidth; sweep.style.animation = "";
+        tog.textContent = "Pause sweep"; tog.setAttribute("aria-pressed", "false");
+        return;
+      }
       const paused = box.classList.toggle("paused");
       tog.textContent = paused ? "Resume sweep" : "Pause sweep";
       tog.setAttribute("aria-pressed", String(paused));
@@ -248,7 +254,8 @@
     $$(".blip", svg).forEach((g) => g.classList.toggle("off", !keep.has(Number(g.dataset.n))));
     $$(".wedge", svg).forEach((w) => w.classList.toggle("on", w.dataset.comp === state.comp));
     $$(".sector-label", svg).forEach((t) => t.classList.toggle("on", t.dataset.comp === state.comp));
-    $("#scope-count").textContent = rows.length === SIGNALS.length ? "All " + SIGNALS.length + " signals on the radar" : rows.length + " of " + SIGNALS.length + " signals match the filters";
+    const sc = $("#scope-count");
+    if (sc) sc.textContent = rows.length === SIGNALS.length ? "All " + SIGNALS.length + " signals on the radar" : rows.length + " of " + SIGNALS.length + " signals match the filters";
   }
 
   // ---------- state ----------
@@ -296,14 +303,15 @@
     $("#feed").innerHTML = rows.map((s, i) => {
       const nl = needsLook(s);
       const anim = !firstRender && !REDUCED && i < 14 ? ' enter" style="animation-delay:' + (i * 22) + 'ms' : "";
-      const where = s.source === "federal_register" ? shortAgency(s.agency) : component(s);
       return '<div class="row' + (nl ? " needs" : "") + anim + '" role="row" tabindex="0" data-n="' + s.n + '" aria-label="' + esc(s.title) + '">' +
-        '<div role="cell" class="c-g">' + glyph(s) + "</div>" +
-        '<div role="cell" class="c-main"><div class="title">' + esc(s.title) + '</div><div class="desc" title="Record text as published">' + esc(s.text) + "</div>" +
-          '<div class="meta">' + tierBadge(s.tier) + '<span class="where">' + esc(where) + "</span><span>" + esc(srcName(s.source)) + ", " + esc((s.doc_type || "").toLowerCase()) + "</span></div></div>" +
-        '<div role="cell" class="c-ai">' + aiChip(s.ai) + (nl ? '<span class="flag">Check this one</span>' : "") + "</div>" +
-        '<div role="cell" class="c-num"><span class="d"><span class="dl">' + (s.source === "usaspending" ? "Starts" : "Published") + "</span> " + esc(fmtDate(s.date)) + "</span>" + (s.amount != null ? '<span class="amt">' + esc(fmtMoney(s.amount)) + "</span>" : "") +
-          '<button class="rowbtn" type="button" data-open="' + s.n + '">Open record</button></div>' +
+        '<div role="cell"><span class="mlabel">Evidence</span>' + tierBadge(s.tier) + "</div>" +
+        '<div role="cell" class="c-title"><div class="t-line">' + glyph(s) + '<div class="title">' + esc(s.title) + '</div></div><div class="desc" title="Record text as published">' + esc(s.text) + "</div>" +
+          '<div class="rowfoot">' + (nl ? '<span class="flag">Check this one</span>' : "") +
+          '<button class="rowbtn" type="button" data-open="' + s.n + '">Open the record</button></div></div>' +
+        '<div role="cell" class="aicell"><span class="mlabel">AI read</span>' + aiChip(s.ai) + "</div>" +
+        '<div role="cell" class="meta"><span class="mlabel">Agency</span>' + esc(shortAgency(s.agency)) + '<div class="src">' + esc(srcName(s.source)) + ", " + esc((s.doc_type || "").toLowerCase()) + "</div></div>" +
+        '<div role="cell" class="meta"><span class="mlabel">Date</span>' + esc(fmtDate(s.date)) + '<div class="src">' + (s.source === "usaspending" ? "start date" : "published") + "</div></div>" +
+        '<div role="cell" class="meta num"><span class="mlabel">Amount</span>' + (s.amount != null ? esc(fmtMoney(s.amount)) : '<span class="src">n/a</span>') + "</div>" +
         "</div>";
     }).join("");
     firstRender = false;
@@ -578,6 +586,18 @@
     io.observe(u);
   }
 
+  // ---------- story preview: one real signal, explained ----------
+  function renderPreview() {
+    const s = SIGNALS.find((x) => x.tier === 1 && x.ai && x.ai.label === "Low") || SIGNALS[0];
+    if (!s || !s.ai || !$("#preview")) return;
+    $("#preview").innerHTML =
+      '<div class="pv-row">' + glyph(s) + tierBadge(s.tier) + aiChip(s.ai) + '<span class="flag">Check this one</span></div>' +
+      '<div class="pv-title">' + esc(s.title) + "</div>" +
+      "<dl><dt>Rule</dt><dd>" + esc(s.tier_reason.replace(/^Tier \d, rule [^:]+: /, "")) + ", the strongest evidence type.</dd>" +
+      '<dt>AI read</dt><dd class="ai">' + esc(s.ai.runs[0].reason) + "</dd></dl>" +
+      '<p class="pv-foot"><button class="linkbtn" type="button" data-open="' + s.n + '">Open the full record</button></p>';
+  }
+
   // ---------- page chrome ----------
   let toastTimer;
   function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 3200); }
@@ -603,7 +623,7 @@
       const row = t.closest(".row");
       if (row && !t.closest("a,button")) { openDetail(row.getAttribute("data-n")); return; }
       if (t.matches("[data-clear]")) { const k = t.getAttribute("data-clear"); state[k] = k === "minAmt" || k === "since" ? null : k === "needs" ? false : ""; render(); return; }
-      if (t.id === "show-far") { resetAll(); state.tier = "1"; syncControls(); render(); $$(".row").forEach((r) => hotlight(r.dataset.n, false)); $("#radar").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" }); toast("Showing the Tier 1 signals. Both carry the amber ring."); return; }
+      if (t.id === "show-far") { resetAll(); state.tier = "1"; syncControls(); render(); $$(".row").forEach((r) => hotlight(r.dataset.n, false)); $("#radar").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" }); toast("Showing the Tier 1 signals. Both are flagged for a human look."); return; }
       if (t.matches("[data-unpend]")) { delete pending[t.getAttribute("data-unpend")]; renderPendingChips(); return; }
       if (t.matches("[data-reset]")) { resetAll(); return; }
       if (t.id === "dl-flags") { downloadFlags(); return; }
@@ -627,6 +647,7 @@
   }
 
   renderScope();
+  renderPreview();
   render();
   renderAccuracy();
   renderFlagsLine();
