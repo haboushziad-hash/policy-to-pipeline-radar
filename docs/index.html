@@ -29,25 +29,20 @@
 </header>
 
 <main id="top">
-<!-- ===================== INTRO ===================== -->
-<section class="intro" aria-labelledby="hero-h">
-  <div class="intro-grid">
-    <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
-    <div class="intro-copy">
+<!-- ===================== HERO: intro + radar ===================== -->
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
       <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work, the security approach that verifies every user and device instead of trusting anything inside the network. Every call shows its reason, how often three AI reads agreed, and a link to the source.</p>
       <p class="who">Built for capture managers, the people at a federal contractor who decide which bids are worth chasing. The goal is to spot likely work before a solicitation posts. This prototype covers the first step: finding the signals and explaining each one.</p>
+      <div class="cta"><a class="btn primary" href="#radar">Browse the 35 signals</a><a class="textlink" href="#test">Try the 10-minute test</a></div>
     </div>
-  </div>
-</section>
-
-<!-- ===================== CONSOLE: radar + signal list ===================== -->
-<section class="console" id="radar" aria-labelledby="radar-h">
-  <div class="scope-pane">
     <figure class="scope" aria-labelledby="scope-cap">
       <div class="scope-box">
         <svg id="scope" viewBox="0 0 600 600" role="img" aria-labelledby="scope-title scope-desc">
           <title id="scope-title">Radar plot of the 35 signals</title>
-          <desc id="scope-desc">Each mark is one public record. Each wedge holds one DoD component, and Federal Register documents get their own wedge. Distance from the center shows age. Fill color shows the AI relevance read. Click a mark or a wedge. The same records are listed beside the plot as text.</desc>
+          <desc id="scope-desc">Each mark is one public record. Each wedge holds one DoD component, and Federal Register documents get their own wedge. Distance from the center shows age. Fill color shows the AI relevance read. Click a mark or a wedge. The same records are listed below the plot as text.</desc>
         </svg>
         <div class="sweep" id="sweep" aria-hidden="true"></div>
         <div class="tip" id="tip" role="status" aria-live="polite"></div>
@@ -59,16 +54,22 @@
           <div><dt>Fill</dt><dd><span><i class="g ci f-high"></i>AI read High</span><span><i class="g ci f-med"></i>Medium</span><span><i class="g ci f-low"></i>Low</span><span><i class="g ci f-unc"></i>Unclear or split</span></dd></div>
           <div><dt>Ring</dt><dd><span><i class="g ci f-high look"></i>Needs a human look</span></dd></div>
         </dl>
-        <p class="key-note">Each wedge holds one DoD component, and Federal Register documents get their own; click a wedge to filter the list. Distance from the center is age, counted back from the Oct 11, 2026 snapshot to an award's start date or a document's publication date. The amber ring means the three AI reads were not unanimous, the AI answered Unclear, or a Tier 1 record reads Low. Marks shift slightly so none hides another. Blue only ever means AI.</p>
-        <div class="notes">
-          <p><b>Where the rule and the AI disagree.</b> The two proposed FAR overhaul rules sit in the strongest evidence tier, yet all three AI reads rated them Low. Ranking them first would mislead a capture manager, so both carry the amber ring. <button class="linkbtn" type="button" id="show-far">Show the two rules</button></p>
-          <p><b>The 90-day ring.</b> No award sits inside it, which fits the 90-day delay on DoD contract data in USAspending. The newest marks are all Federal Register documents.</p>
-        </div>
       </figcaption>
     </figure>
   </div>
+  <div class="wrap">
+    <div class="notes" aria-labelledby="notes-h">
+      <h2 class="notes-h" id="notes-h">Reading the radar</h2>
+      <p><b>How to read it.</b> Each wedge holds one DoD component, and Federal Register documents get their own; click a wedge to filter the list below. Distance from the center is age, counted back from the Oct 11, 2026 snapshot to an award's start date or a document's publication date. The amber ring means the three AI reads were not unanimous, the AI answered Unclear, or a Tier 1 record reads Low. Marks shift slightly so none hides another. Blue only ever means AI.</p>
+      <p><b>Where the rule and the AI disagree.</b> The two proposed FAR overhaul rules sit in the strongest evidence tier, yet all three AI reads rated them Low. Ranking them first would mislead a capture manager, so both carry the amber ring. <button class="linkbtn" type="button" id="show-far">Show the two rules</button></p>
+      <p><b>The 90-day ring.</b> No award sits inside it, which fits the 90-day delay on DoD contract data in USAspending. The newest marks are all Federal Register documents.</p>
+    </div>
+  </div>
+</section>
 
-  <div class="list-pane">
+<!-- ===================== SIGNAL LIST ===================== -->
+<section class="block" id="radar" aria-labelledby="radar-h">
+  <div class="wrap">
     <div class="head">
       <h2 id="radar-h">The signals</h2>
       <p class="sub">35 real records from the October 11, 2026 run. Open any row for the source text, the rule behind its tier, all three AI reads, and a way to disagree.</p>

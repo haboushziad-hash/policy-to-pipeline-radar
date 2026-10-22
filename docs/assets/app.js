@@ -174,7 +174,8 @@
       const fc = fillClass(s.ai), look = needsLook(s);
       let g = '<g class="blip" data-n="' + s.n + '">';
       g += '<circle class="hit" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="12"/>';
-      g += '<circle class="halo" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="8" style="animation-delay:' + delay + 's"/>';
+      g += '<circle class="ping' + (look ? " amber" : "") + '" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="7" style="animation-delay:' + delay + 's"/>';
+      g += '<circle class="flash" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="9" style="animation-delay:' + delay + 's"/>';
       if (look) g += '<circle class="lookring" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="10.4"/>';
       g += s.source === "federal_register"
         ? '<rect class="mk ' + fc + '" x="' + (x - 5.5).toFixed(1) + '" y="' + (y - 5.5).toFixed(1) + '" width="11" height="11"/>'
@@ -213,9 +214,15 @@
       const g = e.target.closest(".blip");
       if (g) { tip.classList.remove("show"); openDetail(g.dataset.n); return; }
       const w = e.target.closest(".wedge");
-      if (w) { state.comp = state.comp === w.dataset.comp ? "" : w.dataset.comp; render(); }
+      if (w) {
+        state.comp = state.comp === w.dataset.comp ? "" : w.dataset.comp; render();
+        if (state.comp) { $("#radar").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" }); toast("Showing the " + (state.comp === "Federal Register" ? "Federal Register documents" : state.comp + " signals") + ". Remove the wedge chip to see all."); }
+      }
     });
 
+    const sweep = $("#sweep");
+    sweep.style.animation = "none"; void sweep.offsetWidth; sweep.style.animation = "";
+    $$(".blip .ping", svg).forEach((c) => { c.style.animationName = "none"; void c.getBoundingClientRect(); c.style.animationName = ""; });
     const tog = $("#sweep-toggle");
     if (REDUCED) { tog.hidden = true; return; }
     tog.addEventListener("click", () => {
