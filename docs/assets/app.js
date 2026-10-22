@@ -394,7 +394,7 @@
       '<div class="card"><h4>Where they agreed and where they did not</h4>' + cm + "</div></div>" +
       '<div class="card" style="margin-top:4px"><h4>Every miss (' + misses.length + ")</h4>" +
         (misses.length ? '<ul class="misslist">' + misses.map((s) => '<li><button type="button" data-open="' + s.n + '">' + esc(s.title) + "</button><br>Analyst: <b>" + esc(s.human) + "</b> · AI: <b>" + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) + "</b> (" + esc(confName[s.ai.confidence]) + ")</li>").join("") + "</ul>" : "<p>None.</p>") +
-        '<p class="conf-text" style="margin:8px 0 0">Method: one analyst (the product owner) labeled all ' + labeled.length + " records High, Medium, Low, or Unclear from the same record text, before seeing any AI read.</p></div>";
+        '<p class="conf-text" style="margin:8px 0 0">Method: one analyst (the product owner) labeled ' + (labeled.length === SIGNALS.length ? "all " + labeled.length : labeled.length + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear before seeing any AI read." + (labeled.length < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p></div>";
   }
 
   // ---------- landing preview: one real signal, explained ----------
