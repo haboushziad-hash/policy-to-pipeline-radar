@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Policy to Pipeline Radar</title>
+<meta name="description" content="A working prototype that turns public federal records into ranked, explained zero trust signals for capture managers. Every call shows its evidence tier, an AI relevance read with its confidence, and the source.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%231f3a5f' stroke-width='8'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#radar">Skip to the Radar</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Policy to Pipeline Radar, back to top"><i aria-hidden="true"></i><span>Policy to Pipeline Radar</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#radar">Radar</a>
+      <a href="#accuracy">Accuracy</a>
+      <a href="#test">Test it</a>
+      <a href="#about">How it works</a>
+    </nav>
+    <div class="proto">Prototype · public data · snapshot Oct 11, 2026</div>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===================== LANDING ===================== -->
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap">
+    <p class="eyebrow">Course prototype · MPIM 6750 · Georgetown University</p>
+    <div class="hero-grid"><div>
+    <h1 id="hero-h">See DoD zero trust work coming before the solicitation posts.</h1>
+    <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work. Every call shows its reason, how confident the AI is, and a link to the source.</p>
+    <p class="who">Built for capture managers: the people at a federal contractor who decide which bids are worth chasing.</p>
+    <div class="cta">
+      <a class="btn primary" href="#radar">Open the Radar</a>
+      <a class="btn" href="#test">Try it in 10 minutes</a>
+    </div>
+    </div>
+    <aside class="preview" id="preview" aria-label="Example: one signal, explained"></aside>
+    </div>
+
+    <div class="steps" role="list" aria-label="How the Radar works">
+      <div class="step src" role="listitem"><div class="num">STEP 1</div><h3>Pull public records</h3><p>Federal Register rules and notices, USAspending contract awards, and SAM.gov opportunities. Nothing internal or paid.</p></div>
+      <div class="step rule" role="listitem"><div class="num">STEP 2 · RULES, NO AI</div><h3>Assign an evidence tier</h3><p>Plain rules place each record on a three-tier ladder by the type of evidence it is, with the rule written next to it.</p></div>
+      <div class="step aistep" role="listitem"><div class="num">STEP 3 · AI</div><h3>Read for relevance, three times</h3><p>Claude reads each record three separate times and calls it High, Medium, Low, or Unclear. Confidence is how often the three reads agree.</p></div>
+      <div class="step you" role="listitem"><div class="num">STEP 4 · YOU</div><h3>Make the call</h3><p>Open any signal to see the source text and every AI read. Flag anything wrong. Nothing changes on its own.</p></div>
+    </div>
+    <div class="stats" id="stats" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ===================== THE RADAR ===================== -->
+<section class="block" id="radar" aria-labelledby="radar-h">
+  <div class="wrap">
+    <h2 id="radar-h">The Radar</h2>
+    <p class="sub">35 real signals from the October 11, 2026 run. Click any row for the source text, the rule behind the tier, all three AI reads, and a way to disagree.</p>
+
+    <div class="legend" aria-label="How to read a row">
+      <div><span class="badge t1">Tier 1</span> <span class="badge t2">Tier 2</span><strong>Evidence tier (rules)</strong>What kind of evidence the record is. Navy always means a rule decided it, not the AI.</div>
+      <div><span class="airead"><span class="tag">AI</span>High <span class="dots" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span></span></span><strong>AI relevance read</strong>Blue always means AI. The dots show how many of the three reads agreed: three filled is unanimous.</div>
+      <div><span class="flag">Check this one</span><strong>Needs a human look</strong>The reads disagreed, the AI could not tell, or the rule and the AI point in opposite directions.</div>
+    </div>
+
+    <div class="ask" id="ask">
+      <div class="ask-head">
+        <h3>Ask the Radar</h3>
+        <span class="note">Stand-in for the planned language model feature: a rule-based parser turns your question into filters and shows them to you before anything runs.</span>
+      </div>
+      <form id="ask-form" autocomplete="off">
+        <label class="sr-only" for="ask-input">Ask a question about the signals</label>
+        <input id="ask-input" type="text" placeholder="e.g. Air Force awards over $1M with high relevance">
+        <button class="btn ai" type="submit">Read my question</button>
+      </form>
+      <div class="examples">Try:
+        <button type="button" data-q="Tier 1 signals the AI is unsure about">Tier 1 signals the AI is unsure about</button>
+        <button type="button" data-q="Army zero trust identity awards since 2025">Army identity awards since 2025</button>
+        <button type="button" data-q="DISA awards over $1M">DISA awards over $1M</button>
+        <button type="button" data-q="what should I check first">what should I check first</button>
+      </div>
+      <div class="interp" id="interp" aria-live="polite">
+        <div class="label">Here is how I read your question. Remove anything I got wrong, then run it.</div>
+        <div class="chips" id="interp-chips"></div>
+        <button class="btn ai small" id="ask-run" type="button">Run these filters</button>
+        <button class="btn link small" id="ask-cancel" type="button">Cancel</button>
+        <div class="did" id="ask-did"></div>
+      </div>
+    </div>
+
+    <div class="filters" role="search" aria-label="Filter signals">
+      <label>Search<input id="f-q" type="search" placeholder="title, agency, or text"></label>
+      <label>Evidence tier<select id="f-tier"><option value="">All tiers</option><option value="1">Tier 1</option><option value="2">Tier 2</option><option value="3">Tier 3</option></select></label>
+      <label>AI relevance<select id="f-ai"><option value="">Any</option><option>High</option><option>Medium</option><option>Low</option><option>Unclear</option><option value="Split">No agreement</option></select></label>
+      <label>AI confidence<select id="f-conf"><option value="">Any</option><option value="High">3 of 3 agree</option><option value="Medium">2 of 3 agree</option><option value="Low">No two agree</option></select></label>
+      <label>Source<select id="f-src"><option value="">All sources</option><option value="federal_register">Federal Register</option><option value="usaspending">USAspending</option><option value="sam">SAM.gov</option></select></label>
+      <label>Sort<select id="f-sort">
+        <option value="relevance">Most relevant first</option>
+        <option value="review">Needs a human look first</option>
+        <option value="tier">Strongest evidence first</option>
+        <option value="date">Newest first</option>
+        <option value="amount">Largest award first</option>
+      </select></label>
+      <button class="btn small" id="f-reset" type="button">Reset</button>
+    </div>
+    <div class="countline"><span id="count" aria-live="polite"></span><span class="active-chips" id="active-chips"></span></div>
+
+    <div class="feed" role="table" aria-label="Signals">
+      <div class="feed-head" role="row">
+        <span role="columnheader">Evidence</span><span role="columnheader">Signal</span><span role="columnheader">AI read</span><span role="columnheader">Agency</span><span role="columnheader">Date</span><span role="columnheader">Amount</span>
+      </div>
+      <div id="feed" role="rowgroup"></div>
+    </div>
+
+    <div class="status" id="status">
+      <span><b>Last pull:</b> Oct 11, 2026, on a personal PC</span>
+      <span><span class="dot ok"></span>Federal Register: 5 records</span>
+      <span><span class="dot ok"></span>USAspending: 30 awards</span>
+      <span><span class="dot warn"></span>SAM.gov: answered, 0 DoD matches for "zero trust" in titles</span>
+      <span><b>AI read:</b> 3 runs, Oct 22, 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ACCURACY ===================== -->
+<section class="block" id="accuracy" aria-labelledby="acc-h">
+  <div class="wrap">
+    <h2 id="acc-h">How much to trust the AI read</h2>
+    <p class="sub">Confidence and accuracy are different questions. Confidence says how often the AI agreed with itself. Accuracy says how often it agreed with a person who knows the domain. This section shows both, so you can see whether high confidence actually earns trust.</p>
+    <div id="acc-body"></div>
+  </div>
+</section>
+
+<!-- ===================== TEST IT ===================== -->
+<section class="block" id="test" aria-labelledby="test-h">
+  <div class="wrap">
+    <h2 id="test-h">Test it in 10 minutes</h2>
+    <p class="sub">The usability script for the first sessions with capture managers. Each task targets one place where the interface has to earn trust. If you are trying the prototype yourself, run the tasks in order and notice where you hesitate.</p>
+    <ol class="tasks">
+      <li><b>Before you scroll: what does this tool do, and who is it for?</b>Answer from the top of the page alone.<div class="look">Watching for: whether the landing page sets the right expectation.</div></li>
+      <li><b>Find the newest Tier 1 signal and say why it is Tier 1.</b>Then say whether you would act on it.<div class="look">Watching for: whether people read the rule, and whether they see that the AI rated it Low.</div></li>
+      <li><b>Find a signal the AI was not sure about and decide for yourself.</b>Use whatever you need on the detail view.<div class="look">Watching for: whether the dots and the three reads make the uncertainty clear.</div></li>
+      <li><b>You think one signal is wrong. Tell the Radar.</b>Pick any one and flag it.<div class="look">Watching for: whether the disagree control is easy to find and whether people expect it to change the score.</div></li>
+    </ol>
+    <div class="protocol">
+      <div><b>Stay quiet</b>Watch what people do, not what they say they would do. Count each task as done, done with a struggle, or gave up.</div>
+      <div><b>Fix between sessions</b>Change the prototype as soon as a problem is clear. The goal is learning fast, not proving anything.</div>
+      <div><b>One short write-up</b>After each round, a few lines on what broke and what changed, sent to the team.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="block" id="about" aria-labelledby="about-h">
+  <div class="wrap">
+    <h2 id="about-h">How it works, and what it cannot do</h2>
+    <p class="sub">The Radar keeps rules and AI in separate lanes, so a reader can always tell which one made a call.</p>
+    <div class="about-grid">
+      <div class="card rulecard">
+        <h4>Evidence tiers (rules)</h4>
+        <ul>
+          <li><b>Tier 1:</b> final rules, proposed rules, and presidential documents.</li>
+          <li><b>Tier 2:</b> Federal Register notices, contract awards, and SAM.gov notices.</li>
+          <li><b>Tier 3:</b> everything else.</li>
+          <li>A tier measures the type of evidence, not relevance. That gap is why the AI read exists.</li>
+        </ul>
+      </div>
+      <div class="card aicard">
+        <h4>AI relevance read</h4>
+        <p class="prompt" id="prompt-text">"For each signal, read the title, agency, and text and judge how relevant it is to Department of Defense zero trust work: High, Medium, or Low. Give a one-sentence reason that names the words in the record that drove the call. If the record is too thin to judge, answer Unclear instead of guessing. Use nothing outside the record, and judge the work described, not the company named."</p>
+        <ul>
+          <li>Run three times, independently, on Oct 22, 2026, with Claude (Anthropic). The reads are saved with the data, so this page makes no live AI calls.</li>
+          <li>Confidence comes from agreement across the three runs, not from the model rating itself.</li>
+          <li>The AI never changes a tier, and a disagreement never changes the AI read on its own.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Known limits</h4>
+        <ul>
+          <li>One snapshot (Oct 11, 2026). The notebook pulls fresh data; this page does not.</li>
+          <li>SAM.gov searches titles only and returned no DoD matches that day.</li>
+          <li>DoD award data reaches USAspending on a 90-day delay, so recent awards are missing.</li>
+          <li>Accuracy is measured against one analyst's labels on 35 records. That is a first check, not a validated rate.</li>
+          <li>Your disagree flags stay in your own browser. In the product they would go to a review log.</li>
+          <li>Lead-time estimates and the capture brief drafter from the design are not built yet.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Source and build</h4>
+        <ul>
+          <li>Public sources only: Federal Register API, USAspending API, SAM.gov Get Opportunities API.</li>
+          <li>Pipeline, rules, and data: <a href="https://github.com/haboushziad-hash/policy-to-pipeline-radar">GitHub repository</a> (Jupyter notebook, Python).</li>
+          <li>Built by prompting Claude (Anthropic); every prompt is in <a href="https://github.com/haboushziad-hash/policy-to-pipeline-radar/blob/main/PROMPTS.md">PROMPTS.md</a>.</li>
+          <li>Company names come from public award records. The AI read judges the work described, not the company.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Policy to Pipeline Radar · Ziad Haboush · course prototype for MPIM 6750, Georgetown University, Fall 2026</span>
+    <span>Public data only · not affiliated with any agency</span>
+  </div>
+</footer>
+
+<button class="btn small totop" id="totop" type="button" aria-label="Back to top">↑ Back to top</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="detail" aria-labelledby="dlg-title">
+  <div class="dlg-head">
+    <h3 id="dlg-title"></h3>
+    <button class="btn small" id="dlg-close" type="button" aria-label="Close detail">Close</button>
+  </div>
+  <div class="dlg-body" id="dlg-body"></div>
+</dialog>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

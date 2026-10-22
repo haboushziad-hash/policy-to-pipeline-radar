@@ -1,6 +1,8 @@
 # Policy to Pipeline Radar: course prototype
 
-Prototype for MPIM-6750 Developing and Managing AI Products (Georgetown University, Fall 2026), Module 5 hands-on assignment.
+Prototype for MPIM-6750 Developing and Managing AI Products (Georgetown University, Fall 2026). The notebook was the Module 5 hands-on assignment; the website in `docs/` is the Module 7 UI prototype.
+
+**Live site:** https://haboushziad-hash.github.io/policy-to-pipeline-radar/
 
 The Radar pulls public federal signals about zero trust work at the Department of Defense, normalizes them into one schema, and places each signal on a three-tier evidence ladder with a written reason. The goal is to let a capture manager see a likely opportunity before the solicitation posts.
 
@@ -18,6 +20,17 @@ The Radar pulls public federal signals about zero trust work at the Department o
 | 5. Ask the Radar | Rule-based stand-in for the planned LLM feature: question to filter chips, chips shown before the filter runs. |
 | 6. Disagree | Fixed-reason feedback logged to CSV for human review. Never changes a tier. |
 | 7. Save | Writes `data/processed/signals.csv` and a run summary. |
+
+## The website (Module 7)
+
+`docs/` holds a static site served by GitHub Pages: a landing page, the Radar feed with filters, a detail view for every signal, Ask the Radar, an accuracy check, and a usability test script. It reads one data file, `docs/assets/data.js`, and makes no network or AI calls at runtime.
+
+- **Evidence tier (navy):** the notebook's plain rules, unchanged.
+- **AI relevance read (blue):** Prompt 8 in `PROMPTS.md`, run three times. Confidence is how many runs agree: 3 of 3, 2 of 3, or no two.
+- **Accuracy:** the AI read compared with hand labels in `data/ai_read/human_labels.json`, made before looking at the AI output.
+- **Disagree flags:** kept in the visitor's browser and downloadable as CSV. Nothing changes a tier or an AI read automatically.
+
+To rebuild the site data after a new run: `python scripts/build_site_data.py`.
 
 ## Quick run (Windows)
 
@@ -59,4 +72,4 @@ October 11, 2026, on my own PC: 35 signals (5 Federal Register, 30 USAspending, 
 
 ## How it was built
 
-Built in a Jupyter notebook by prompting Claude (Anthropic), Opus 5.5 model. The prompts are in `PROMPTS.md`.
+Built in a Jupyter notebook by prompting Claude (Anthropic), Opus 5.5 model. The prompts are in `PROMPTS.md`. The website and the AI relevance reads were also built and generated with Claude.

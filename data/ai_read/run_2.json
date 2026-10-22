@@ -1,0 +1,212 @@
+[
+ {
+  "n": 1,
+  "id": "2026-19162",
+  "relevance": "Low",
+  "reason": "Proposes FAR revisions to \"streamline the FAR\" and eliminate \"excessive acquisition regulations\" with no mention of zero trust or cybersecurity."
+ },
+ {
+  "n": 2,
+  "id": "2026-19158",
+  "relevance": "Low",
+  "reason": "Proposes revisions to \"FAR parts 14, 28, 36, and 52\" to \"streamline the FAR\", an acquisition rule with no zero trust or cybersecurity content."
+ },
+ {
+  "n": 3,
+  "id": "2026-19612",
+  "relevance": "Low",
+  "reason": "Covers the \"DON Child and Youth Program\" records system; its only security link is aligning with \"current cybersecurity policies\", with no zero trust work described."
+ },
+ {
+  "n": 4,
+  "id": "2026-18517",
+  "relevance": "Unclear",
+  "reason": "Only states it is \"establishing the Homeland Defense Board (HDB)\" as a \"discretionary Federal advisory committee\" and gives no scope to judge against zero trust."
+ },
+ {
+  "n": 5,
+  "id": "2026-16612",
+  "relevance": "Low",
+  "reason": "Describes a \"Regulatory Agenda\" of pending \"Federal Acquisition Regulation (FAR)\" rules with no mention of zero trust or cybersecurity."
+ },
+ {
+  "n": 6,
+  "id": "CONT_AWD_N6339426F4021_9700_NNG15SD72B_8000",
+  "relevance": "Medium",
+  "reason": "Names \"zero trust data security\", but the work is a \"one-year renewal\" of \"maintenance and support services\" for \"existing\" hardware appliances."
+ },
+ {
+  "n": 7,
+  "id": "CONT_AWD_W912HQ26CA041_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "A \"zero trust cyber security solution\" demonstration for \"operational technologies in critical energy infrastructure\" under an Army award."
+ },
+ {
+  "n": 8,
+  "id": "CONT_AWD_HTC71126CE129_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Directly supports \"USTRANSCOM zero trust enterprise modernization and optimization\" through a \"commercial solutions opening\" call."
+ },
+ {
+  "n": 9,
+  "id": "CONT_AWD_FA864926P0246_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Describes a \"zero-trust platform\" built as an \"AI-enhanced data vault\" for \"multi-domain situational awareness\" for the Air Force."
+ },
+ {
+  "n": 10,
+  "id": "CONT_AWD_FA864926P0140_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Builds \"5-factor authentication\" designed \"for zero-trust and disconnected environments\", which ties the identity work directly to zero trust."
+ },
+ {
+  "n": 11,
+  "id": "CONT_AWD_FA864926P0121_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Delivers an \"AI-orchestrated zero-trust environment\" for \"tactical coalition collaboration\", making zero trust the core of the work."
+ },
+ {
+  "n": 12,
+  "id": "CONT_AWD_FA864926P0034_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Aims at \"operationalizing privacy-by-design and zero trust through data minimization\" in \"traditional and AI-based applications\"."
+ },
+ {
+  "n": 13,
+  "id": "CONT_AWD_N0018926FD063_9700_NNG15SD76B_8000",
+  "relevance": "High",
+  "reason": "Buys an \"endpoint\" software suite under a \"zero trust cybersecurity network architecture\" for \"Joint Staff J6\" project networks."
+ },
+ {
+  "n": 14,
+  "id": "CONT_AWD_W912HZ26CA020_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "An \"SBIR Phase III\" award for \"zero trust licenses\" for an \"HPCMP government tenant\", a direct zero trust purchase."
+ },
+ {
+  "n": 15,
+  "id": "CONT_AWD_SPE8EL26F1303_9700_SPE8EJ21D0020_9700",
+  "relevance": "Medium",
+  "reason": "Names a \"zero trust integrated system\", but the rest of the record is a number, so the scope of the work is not described."
+ },
+ {
+  "n": 16,
+  "id": "CONT_AWD_SPE8EL26F12XU_9700_SPE8EJ21D0020_9700",
+  "relevance": "Medium",
+  "reason": "Mentions \"network operations\" and \"zero trust\", but the text is cut off at \"zero trust F\", leaving the actual work undefined."
+ },
+ {
+  "n": 17,
+  "id": "CONT_AWD_FA561326F0042_9700_N6600124A0003_9700",
+  "relevance": "High",
+  "reason": "Annual licenses for a \"comply-to-connect zero trust solution\" for the \"Air Component Battle Network (ACBN)\"."
+ },
+ {
+  "n": 18,
+  "id": "CONT_AWD_FA822226FB007_9700_NNG15SD66B_8000",
+  "relevance": "Medium",
+  "reason": "Purchases a \"zero trust HW and SW package\", but the specifications sit in an \"attached EL\" that is not in the record."
+ },
+ {
+  "n": 19,
+  "id": "CONT_AWD_FA800326F0001_9700_N6600124A0003_9700",
+  "relevance": "High",
+  "reason": "Buys \"comply to connect (C2C)\" licenses and support to ensure \"compliance with DoD CISO\", described as \"vital to realizing the DODs zero trust goals\"."
+ },
+ {
+  "n": 20,
+  "id": "CONT_AWD_HQ003425CE074_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Provides \"specialized services to support cybersecurity and the zero trust portfolio management office\" for the \"Deputy Chief Information Officer\"."
+ },
+ {
+  "n": 21,
+  "id": "CONT_AWD_FA489025F0076_9700_47QRCA25DU090_4732",
+  "relevance": "High",
+  "reason": "Provides \"zero trust (ZT) functional management office (FMO) support services\" for the \"Department of the Air Force\"."
+ },
+ {
+  "n": 22,
+  "id": "CONT_AWD_FA864926P0180_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Describes \"on-premise decentralized network security\" as \"a zero trust-compliant solution\" under an Air Force award."
+ },
+ {
+  "n": 23,
+  "id": "CONT_AWD_W5170125CA131_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "An \"SBIR Phase II\" award on \"topic A 23-009, zero trust identity\", which names zero trust as the subject of the work."
+ },
+ {
+  "n": 24,
+  "id": "CONT_AWD_W56KGU25C0006_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "\"Tactical zero trust (TZT)\" work for \"Army network defense\", including \"verifying trust and authorization for every user and device\"."
+ },
+ {
+  "n": 25,
+  "id": "CONT_AWD_FA873025PB006_9700_-NONE-_-NONE-",
+  "relevance": "Medium",
+  "reason": "Names \"zero-trust\", but the work is a \"commercial-based framework\" for \"autonomous drone swarming\", a narrow application with no network or identity detail."
+ },
+ {
+  "n": 26,
+  "id": "CONT_AWD_W9127S24P0086_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Procures \"hardware and implementation guidance services\" for \"a critical infrastructure zero trust solution\"."
+ },
+ {
+  "n": 27,
+  "id": "CONT_AWD_HC105024F0044_9700_HC105023D0005_9700",
+  "relevance": "High",
+  "reason": "Funds a \"zero trust governance commercial cloud lab & assessment tool\" for the \"Defense Information Systems Agency\"."
+ },
+ {
+  "n": 28,
+  "id": "CONT_AWD_FA560624P0020_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "A \"Phase III zero trust cybersecurity solution\" for \"the Spangdahlem Air Base\", making zero trust the stated work."
+ },
+ {
+  "n": 29,
+  "id": "CONT_AWD_W912HQ24C0064_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Demonstrates \"interoperable zero-trust security for facility related control systems\" and \"zero-trust cybersecurity for DoD networks\"."
+ },
+ {
+  "n": 30,
+  "id": "CONT_AWD_HC108424C0005_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Names a \"zero trust compliancy solution\" for the \"Defense Information Systems Agency\", with zero trust compliance as the stated work."
+ },
+ {
+  "n": 31,
+  "id": "CONT_AWD_HC102824F3000_9700_HC104719D2029_9700",
+  "relevance": "High",
+  "reason": "Calls for \"zero trust architecture (ZTA) support\" at the \"Defense Information Systems Agency\", a direct statement of zero trust work."
+ },
+ {
+  "n": 32,
+  "id": "CONT_AWD_FA864924P0411_9700_-NONE-_-NONE-",
+  "relevance": "Medium",
+  "reason": "Names \"zero trust architecture\", but the work centers on \"security system video scene authentication\", a narrow application with little other detail."
+ },
+ {
+  "n": 33,
+  "id": "CONT_AWD_N6523624F0142_9700_N0003919D0015_9700",
+  "relevance": "High",
+  "reason": "Includes a \"ONE-NET zero trust network architecture pilot\" alongside \"PKI server\" and \"domain controller\" technical refreshes at \"OCONUS sites\"."
+ },
+ {
+  "n": 34,
+  "id": "CONT_AWD_FA701423F0375_9700_FA701420D0009_9700",
+  "relevance": "High",
+  "reason": "Provides \"zero trust transition team (ZTTT) contract support\" for \"HQ CCC\" under an Air Force task order."
+ },
+ {
+  "n": 35,
+  "id": "CONT_AWD_FA864923P1067_9700_-NONE-_-NONE-",
+  "relevance": "High",
+  "reason": "Builds an \"adaptive zero-trust authentication platform\" for \"website and mobile applications\" used by \"airmen\"."
+ }
+]

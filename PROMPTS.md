@@ -29,3 +29,9 @@ Sent in order to Claude (Anthropic), Opus 5.5 model. Each prompt produced or ext
 ## Prompt 7: disagree control
 
 > Last piece is Flow B from S5, attached: the disagree control. Let a capture manager flag a signal by picking one reason from a fixed list: wrong tier, wrong agency or component, duplicate of another signal, not relevant to zero trust work, or other with a one-line note. Append each flag to data/feedback/disagree_log.csv with the signal ID, its current tier and rule, the reason, the note, and a timestamp. Never change a tier automatically. The log is for me to review.
+
+## Prompt 8: AI relevance read (Module 7)
+
+> Add an AI relevance read on top of the tiers. For each signal in data/processed/signals.csv, read the title, agency, and text and judge how relevant it is to Department of Defense zero trust work: High, Medium, or Low. Give a one-sentence reason that names the words in the record that drove the call. If the record is too thin to judge, answer Unclear instead of guessing. Use nothing outside the record, and judge the work described, not the company named. Return JSON with id, relevance, and reason.
+
+Run three times, independently, on October 22, 2026. The outputs are `data/ai_read/run_1.json` to `run_3.json`. Confidence on the site is the number of runs that agree.
