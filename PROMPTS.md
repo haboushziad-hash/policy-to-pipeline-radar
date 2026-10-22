@@ -34,4 +34,11 @@ Sent in order to Claude (Anthropic), Opus 5.5 model. Each prompt produced or ext
 
 > Add an AI relevance read on top of the tiers. For each signal in data/processed/signals.csv, read the title, agency, and text and judge how relevant it is to Department of Defense zero trust work: High, Medium, or Low. Give a one-sentence reason that names the words in the record that drove the call. If the record is too thin to judge, answer Unclear instead of guessing. Use nothing outside the record, and judge the work described, not the company named. Return JSON with id, relevance, and reason.
 
-Run three times, independently, on October 22, 2026. The outputs are `data/ai_read/run_1.json` to `run_3.json`. Confidence on the site is the number of runs that agree.
+Run three separate times on October 22, 2026. The outputs are `data/ai_read/run_1.json` to `run_3.json`. Confidence on the site is the number of runs that agree.
+
+Output rules added to each run, beyond the instruction above: keep the reason under 30 words, quote the record's own words in double quotes, use no dashes, and do not treat the company name as a factor. A script checked each run for 35 answers in input order, valid labels, matching record IDs, the word limit, and quoted text. Each object also carries the record number `n` so runs can be matched.
+
+## Not covered by a prompt
+
+- After Prompt 2, the award window was widened from 90 to 365 days because of the 90-day DoD reporting delay, and the Federal Register search was widened to `"zero trust" | cybersecurity | CMMC` because the Federal Register rarely uses the phrase "zero trust". The README's Known limits section records both.
+- The Module 7 website (`docs/`), `scripts/build_site_data.py`, and the hand-label accuracy check were also built with Claude, over a working session rather than a single prompt.

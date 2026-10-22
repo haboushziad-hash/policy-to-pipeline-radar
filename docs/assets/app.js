@@ -31,6 +31,7 @@
     if (v >= 1e3) return "$" + Math.round(v / 1e3) + "K";
     return "$" + Math.round(v);
   }
+  function dateLabel(s) { return s.source === "usaspending" ? "Start date" : s.source === "federal_register" ? "Published" : "Posted"; }
   function srcName(s) { return { federal_register: "Federal Register", usaspending: "USAspending", sam: "SAM.gov" }[s] || s; }
   function shortAgency(a) {
     if (!a) return "";
@@ -81,114 +82,139 @@
   }
   function tierBadge(t) { return '<span class="badge t' + t + '">Tier ' + t + "</span>"; }
 
+  // ---------- shared glyph: same mark on the radar and in the list ----------
+  function fillClass(a) { if (!a) return "f-unc"; return { High: "f-high", Medium: "f-med", Low: "f-low" }[a.label] || "f-unc"; }
+  function glyph(s) {
+    const fc = fillClass(s.ai);
+    let g = '<svg class="glyph" viewBox="0 0 24 24" aria-hidden="true">';
+    if (needsLook(s)) g += '<circle class="lookring" cx="12" cy="12" r="10.4"/>';
+    g += s.source === "federal_register" ? '<rect class="mk ' + fc + '" x="6.5" y="6.5" width="11" height="11"/>' : '<circle class="mk ' + fc + '" cx="12" cy="12" r="6"/>';
+    return g + "</svg>";
+  }
+
   // ---------- the radar scope ----------
   const SECTOR_ORDER = ["Federal Register", "Air Force", "Army", "Navy", "DISA", "DLA", "WHS", "USTRANSCOM"];
-  const CX = 300, CY = 300, R = 270, R0 = 64;
-  function ageDays(s) { return s.date ? Math.max(0, (SNAPSHOT - new Date(s.date + "T12:00:00")) / 864e5) : 0; }
-  const MAXDAYS = Math.max(1130, ...SIGNALS.map(ageDays));
-  function radiusFor(days) { return R0 + (R - 18 - R0) * Math.sqrt(days / MAXDAYS); }
+  const CX = 300, CY = 300, R = 240, R0 = 46, MAXDAYS = 1140;
+  function ageDays(s) { return s.date ? Math.max(0, (SNAPSHOT - new Date(s.date + "T12:00:00")) / 864e5) : MAXDAYS; }
+  function radiusFor(days) { return R0 + (R - 12 - R0) * Math.sqrt(Math.min(days, MAXDAYS) / MAXDAYS); }
   function polar(r, deg) { const t = (deg - 90) * Math.PI / 180; return [CX + r * Math.cos(t), CY + r * Math.sin(t)]; }
+  function arcPath(r, a0, a1, reverse) {
+    const [x0, y0] = polar(r, reverse ? a1 : a0), [x1, y1] = polar(r, reverse ? a0 : a1);
+    return "M" + x0.toFixed(1) + " " + y0.toFixed(1) + " A" + r + " " + r + " 0 " + (a1 - a0 > 180 ? 1 : 0) + " " + (reverse ? 0 : 1) + " " + x1.toFixed(1) + " " + y1.toFixed(1);
+  }
+  function jitter(n) { const v = Math.sin(n * 12.9898 + 4.1) * 43758.5453; return (v - Math.floor(v)) * 2 - 1; }
+  const SECTORS = [];
 
   function renderScope() {
     const svg = $("#scope");
     if (!svg) return;
-    const NS = "http://www.w3.org/2000/svg";
     const groups = {};
     SIGNALS.forEach((s) => { (groups[component(s)] = groups[component(s)] || []).push(s); });
     const keys = SECTOR_ORDER.filter((k) => groups[k]).concat(Object.keys(groups).filter((k) => !SECTOR_ORDER.includes(k)));
-    const weight = (k) => Math.max(groups[k].length, 2.6);
+    const weight = (k) => (k === "Federal Register" ? 10 : Math.max(groups[k].length, 3));
     const total = keys.reduce((a, k) => a + weight(k), 0);
-    const GAP = 3;
-    let h = '<circle class="disc" cx="300" cy="300" r="' + R + '"/>';
-    // range rings, labelled by age
-    [[91, "3 mo"], [365, "1 yr"], [730, "2 yr"], [1095, "3 yr"]].forEach(([d, lbl], i) => {
-      const r = radiusFor(d);
-      h += '<circle class="ring ring-draw" style="animation-delay:' + (i * 0.12) + 's" cx="300" cy="300" r="' + r.toFixed(1) + '"/>';
-      const [x, y] = polar(r, 4);
-      h += '<text class="ring-label" x="' + (x + 4).toFixed(1) + '" y="' + (y + 4).toFixed(1) + '" paint-order="stroke" stroke="#f3f6f4" stroke-width="4">' + lbl + "</text>";
-    });
+    let wedges = "", labels = "", defs = "";
     let start = 0;
-    const blipsSvg = [];
     const placed = [];
-    keys.forEach((k) => {
-      const span = (360 * weight(k)) / total;
-      const a0 = start + GAP / 2, a1 = start + span - GAP / 2;
-      // sector boundary
-      const [bx, by] = polar(R, start);
-      h += '<line class="spoke" x1="300" y1="300" x2="' + bx.toFixed(1) + '" y2="' + by.toFixed(1) + '"/>';
-      // label inside the rim
-      const mid = (a0 + a1) / 2;
-      const [lx, ly] = polar(R - 16, mid);
-      h += '<text class="sector-label" x="' + lx.toFixed(1) + '" y="' + (ly + 5).toFixed(1) + '" text-anchor="middle" paint-order="stroke" stroke="#f3f6f4" stroke-width="5">' + esc(k) + "</text>";
-      // blips: newest nearest the center
-      const list = groups[k].slice().sort((p, q) => (q.date || "").localeCompare(p.date || ""));
-      const n = list.length;
-      list.forEach((s, i) => {
-        const ang = n === 1 ? mid : a0 + 6 + ((a1 - a0 - 12) * i) / (n - 1);
-        const r = Math.min(radiusFor(ageDays(s)), R - 34);
-        const size = s.source === "usaspending" && s.amount ? Math.max(4.5, Math.min(13, 4 + 9 * Math.sqrt(s.amount / 25e6))) : 6;
-        placed.push({ s, ang, r, r0: r, size, lo: a0 + 3, hi: a1 - 3, k });
+    keys.forEach((k, idx) => {
+      const span = (360 * weight(k)) / total, a0 = start, a1 = start + span, mid = (a0 + a1) / 2;
+      SECTORS.push({ k, a0, a1 });
+      const [x0, y0] = polar(R, a0), [x1, y1] = polar(R, a1);
+      wedges += '<path class="wedge' + (idx % 2 ? " alt" : "") + '" data-comp="' + esc(k) + '" d="M300 300 L' + x0.toFixed(1) + " " + y0.toFixed(1) + " A" + R + " " + R + " 0 " + (span > 180 ? 1 : 0) + " 1 " + x1.toFixed(1) + " " + y1.toFixed(1) + ' Z"><title>' + esc(k) + ": " + groups[k].length + " signal" + (groups[k].length > 1 ? "s" : "") + ". Click to filter the list.</title></path>";
+      // label on a curved path just outside the rim; flipped on the lower half so it reads left to right
+      const lower = mid > 90 && mid < 270;
+      defs += '<path id="lab-' + idx + '" d="' + arcPath(lower ? R + 20 : R + 9, a0, a1, lower) + '"/>';
+      labels += '<text class="sector-label" data-comp="' + esc(k) + '"><textPath href="#lab-' + idx + '" startOffset="50%" text-anchor="middle">' + esc(k) + '<tspan class="sector-count"> ' + groups[k].length + "</tspan></textPath></text>";
+      // place marks at their true age; spread them across the wedge so none hides another
+      groups[k].slice().sort((p, q) => ageDays(p) - ageDays(q)).forEach((s) => {
+        const r0 = radiusFor(ageDays(s));
+        let best = null;
+        const r90 = radiusFor(90), young = ageDays(s) < 90;
+        for (const dr of [0, 8, -8, 14, -14, 20, -20]) {
+          const r = r0 + dr;
+          if (young ? r > r90 - 9 : r < r90 + 9) continue;
+          if (r < R0 + 6) continue;
+          const pad = (13 / r) * 57.3;
+          const lo = a0 + pad, hi = a1 - pad;
+          if (lo > hi) continue;
+          const pref = Math.min(hi, Math.max(lo, mid + jitter(s.n) * (hi - lo) * 0.42));
+          const cands = [];
+          for (let a = lo; a <= hi + 1e-9; a += 0.5) cands.push(a);
+          cands.sort((p, q) => Math.abs(p - pref) - Math.abs(q - pref));
+          for (const ang of cands) {
+            const [x, y] = polar(r, ang);
+            if (placed.every((p) => Math.hypot(p.x - x, p.y - y) >= 25)) { best = { ang, r, x, y }; break; }
+          }
+          if (best) break;
+        }
+        if (!best) { const [x, y] = polar(r0, mid); best = { ang: mid, r: r0, x, y }; }
+        placed.push(Object.assign(best, { s }));
       });
       start += span;
     });
-    // nudge marks in the same sector apart so none hides another (angle first, then a little radius)
-    for (let it = 0; it < 300; it++) {
-      let moved = false;
-      for (let i = 0; i < placed.length; i++) for (let j = i + 1; j < placed.length; j++) {
-        const p = placed[i], q = placed[j];
-        if (p.k !== q.k) continue;
-        const [px, py] = polar(p.r, p.ang), [qx, qy] = polar(q.r, q.ang);
-        const need = p.size + q.size + 10, d = Math.hypot(px - qx, py - qy);
-        if (d >= need) continue;
-        moved = true;
-        const push = (need - d) / 2 + 0.5;
-        const dir = p.ang <= q.ang ? -1 : 1;
-        const degP = (push / Math.max(p.r, 1)) * 57.3, degQ = (push / Math.max(q.r, 1)) * 57.3;
-        const np = Math.min(p.hi, Math.max(p.lo, p.ang + dir * degP)), nq = Math.min(q.hi, Math.max(q.lo, q.ang - dir * degQ));
-        const stuck = Math.abs(np - p.ang) + Math.abs(nq - q.ang) < 0.05;
-        p.ang = np; q.ang = nq;
-        if (stuck) {
-          const rdir = p.r <= q.r ? -1 : 1;
-          p.r = Math.min(p.r0 + 22, Math.max(p.r0 - 22, p.r + rdir * push));
-          q.r = Math.min(q.r0 + 22, Math.max(q.r0 - 22, q.r - rdir * push));
-        }
+
+    let rings = "";
+    // ring labels go where no mark sits: try angles around the rim and keep the clearest one per ring
+    [[90, "90 days"], [365, "1 yr"], [730, "2 yr"], [1095, "3 yr"]].forEach(([d, lbl], i) => {
+      const r = radiusFor(d);
+      rings += '<circle class="ring ring-draw' + (d === 90 ? " r90" : "") + '" style="animation-delay:' + (i * 0.1) + 's" cx="300" cy="300" r="' + r.toFixed(1) + '"/>';
+      let bestA = 0, bestD = -1;
+      for (let a = 0; a < 360; a += 2) {
+        const [x, y] = polar(r, a);
+        const dmin = Math.min(...placed.map((p) => Math.hypot((p.x - x) / 1.8, p.y - y)));
+        const bias = -Math.abs(((a + 180) % 360) - 180) * 0.02; // prefer the top of the scope when it is just as clear
+        if (dmin + bias > bestD) { bestD = dmin + bias; bestA = a; }
       }
-      if (!moved) break;
-    }
-    placed.forEach(({ s, ang, r, size }) => {
-      {
-        const [x, y] = polar(r, ang);
-        const delay = ((ang / 360) * SWEEP_SECONDS).toFixed(2);
-        const a = s.ai;
-        const review = needsLook(s);
-        let g = '<g class="blip' + (review ? " review" : "") + '" data-n="' + s.n + '" style="animation-delay:' + delay + 's">';
-        g += '<circle class="halo" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (size + 2).toFixed(1) + '" style="animation-delay:' + delay + 's"/>';
-        if (a && (a.label === "High" || a.label === "Medium")) g += '<circle class="ai-ring' + (a.label === "Medium" ? " med" : "") + '" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (size + 4).toFixed(1) + '"/>';
-        if (s.source === "federal_register") g += '<rect class="mark t' + s.tier + '" x="' + (x - 6).toFixed(1) + '" y="' + (y - 6).toFixed(1) + '" width="12" height="12"/>';
-        else g += '<circle class="mark t' + s.tier + '" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + size.toFixed(1) + '"/>';
-        if (review) g += '<circle class="rv" cx="' + (x + size + 2).toFixed(1) + '" cy="' + (y - size - 2).toFixed(1) + '" r="4"/>';
-        g += "</g>";
-        blipsSvg.push(g);
-      }
+      const [lx, ly] = polar(r, bestA);
+      rings += '<text class="ring-label" x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" text-anchor="middle">' + lbl + "</text>";
     });
-    h += '<circle class="ring" cx="300" cy="300" r="' + R0 + '" style="stroke-dasharray:none"/><circle cx="300" cy="300" r="3" fill="#1f3a5f"/>';
-    svg.insertAdjacentHTML("beforeend", h + blipsSvg.join(""));
+
+    const blips = placed.map(({ s, ang, x, y }) => {
+      const delay = ((ang / 360) * SWEEP_SECONDS).toFixed(2);
+      const fc = fillClass(s.ai), look = needsLook(s);
+      let g = '<g class="blip" data-n="' + s.n + '">';
+      g += '<circle class="hit" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="12"/>';
+      g += '<circle class="halo" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="8" style="animation-delay:' + delay + 's"/>';
+      if (look) g += '<circle class="lookring" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="10.4"/>';
+      g += s.source === "federal_register"
+        ? '<rect class="mk ' + fc + '" x="' + (x - 5.5).toFixed(1) + '" y="' + (y - 5.5).toFixed(1) + '" width="11" height="11"/>'
+        : '<circle class="mk ' + fc + '" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="6"/>';
+      return g + "</g>";
+    }).join("");
+
+    svg.insertAdjacentHTML("beforeend",
+      "<defs>" + defs + "</defs>" +
+      '<g class="wedges">' + wedges + "</g>" +
+      '<circle class="rim" cx="300" cy="300" r="' + R + '"/>' +
+      '<g class="rings">' + rings + "</g>" +
+      '<circle class="core" cx="300" cy="300" r="' + (R0 - 8) + '"/>' +
+      '<text class="core-label" x="300" y="297" text-anchor="middle">Oct 11</text><text class="core-sub" x="300" y="311" text-anchor="middle">2026</text>' +
+      labels + '<g class="blips">' + blips + "</g>");
 
     const box = $(".scope-box"), tip = $("#tip");
-    svg.addEventListener("mouseover", (e) => {
-      const g = e.target.closest(".blip"); if (!g) return;
+    function showTip(g) {
       const s = SIGNALS.find((x) => x.n === Number(g.dataset.n));
       const a = s.ai;
-      tip.innerHTML = "<b>" + esc(s.title) + "</b>" + esc(component(s)) + ", " + esc(fmtDate(s.date)) + (s.amount != null ? ", " + esc(fmtMoney(s.amount)) : "") +
-        "<br>Tier " + s.tier + ', <span class="ai">AI read ' + esc(a ? (a.label === "Split" ? "split" : a.label) : "none") + "</span>" + (needsLook(s) ? "<br>Needs a human look" : "");
+      tip.innerHTML = "<b>" + esc(s.title) + "</b>" + esc(component(s)) + ", " + (s.source === "usaspending" ? "starts " : "published ") + esc(fmtDate(s.date)) + (s.amount != null ? ", " + esc(fmtMoney(s.amount)) : "") +
+        "<br>Tier " + s.tier + ', <span class="ai">AI read ' + esc(a ? (a.label === "Split" ? "split" : a.label) : "none") + "</span>" + (needsLook(s) ? '<br><span class="lk">Needs a human look</span>' : "") + '<span class="hint">Click to open</span>';
       const bb = box.getBoundingClientRect(), gb = g.getBoundingClientRect();
-      let left = gb.left - bb.left + gb.width / 2 + 12, top = gb.top - bb.top - 8;
-      if (left > bb.width - 290) left = gb.left - bb.left - 292;
-      tip.style.left = Math.max(0, left) + "px"; tip.style.top = Math.max(0, top) + "px";
+      let left = gb.left - bb.left + gb.width / 2 + 14, top = gb.top - bb.top - 6;
+      if (left > bb.width - 270) left = gb.left - bb.left - 274;
+      tip.style.left = Math.max(0, left) + "px"; tip.style.top = Math.max(0, Math.min(top, bb.height - 120)) + "px";
       tip.classList.add("show");
+    }
+    svg.addEventListener("mouseover", (e) => {
+      const g = e.target.closest(".blip");
+      if (g) { showTip(g); hotlight(g.dataset.n, true); return; }
+      const w = e.target.closest(".wedge"); $$(".sector-label", svg).forEach((t) => t.classList.toggle("hov", !!w && t.dataset.comp === w.dataset.comp));
     });
-    svg.addEventListener("mouseout", (e) => { if (e.target.closest(".blip")) tip.classList.remove("show"); });
-    svg.addEventListener("click", (e) => { const g = e.target.closest(".blip"); if (g) { tip.classList.remove("show"); openDetail(g.dataset.n); } });
+    svg.addEventListener("mouseout", (e) => { const g = e.target.closest(".blip"); if (g) { tip.classList.remove("show"); hotlight(g.dataset.n, false); } });
+    svg.addEventListener("click", (e) => {
+      const g = e.target.closest(".blip");
+      if (g) { tip.classList.remove("show"); openDetail(g.dataset.n); return; }
+      const w = e.target.closest(".wedge");
+      if (w) { state.comp = state.comp === w.dataset.comp ? "" : w.dataset.comp; render(); }
+    });
 
     const tog = $("#sweep-toggle");
     if (REDUCED) { tog.hidden = true; return; }
@@ -199,14 +225,34 @@
     });
   }
 
+  // highlight one record on the radar and in the list together
+  function hotlight(n, on) {
+    const svg = $("#scope");
+    const g = svg && $('.blip[data-n="' + n + '"]', svg);
+    if (g) g.classList.toggle("hot", on);
+    if (svg) svg.classList.toggle("focus", on && !!g);
+    const row = $('.row[data-n="' + n + '"]');
+    if (row) row.classList.toggle("hot", on);
+  }
+  function syncScope(rows) {
+    const svg = $("#scope");
+    if (!svg) return;
+    const keep = new Set(rows.map((s) => s.n));
+    $$(".blip", svg).forEach((g) => g.classList.toggle("off", !keep.has(Number(g.dataset.n))));
+    $$(".wedge", svg).forEach((w) => w.classList.toggle("on", w.dataset.comp === state.comp));
+    $$(".sector-label", svg).forEach((t) => t.classList.toggle("on", t.dataset.comp === state.comp));
+    $("#scope-count").textContent = rows.length === SIGNALS.length ? "All " + SIGNALS.length + " signals on the radar" : rows.length + " of " + SIGNALS.length + " signals match the filters";
+  }
+
   // ---------- state ----------
-  const state = { q: "", tier: "", ai: "", conf: "", src: "", sort: "relevance", agency: "", minAmt: null, since: null, keyword: "", needs: false };
+  const state = { q: "", tier: "", ai: "", conf: "", src: "", sort: "relevance", agency: "", minAmt: null, since: null, keyword: "", needs: false, comp: "" };
 
   function matches(s) {
     if (state.tier && String(s.tier) !== state.tier) return false;
     if (state.ai && (!s.ai || s.ai.label !== state.ai)) return false;
     if (state.conf && (!s.ai || s.ai.confidence !== state.conf)) return false;
     if (state.src && s.source !== state.src) return false;
+    if (state.comp && component(s) !== state.comp) return false;
     if (state.agency && !(s.agency || "").toLowerCase().includes(state.agency.toLowerCase())) return false;
     if (state.minAmt != null && !(s.amount >= state.minAmt)) return false;
     if (state.since && !(s.date && s.date >= state.since)) return false;
@@ -235,6 +281,7 @@
     const rows = SIGNALS.filter(matches).sort(sorter);
     $("#count").textContent = "Showing " + rows.length + " of " + SIGNALS.length + " signals";
     renderActiveChips();
+    syncScope(rows);
     if (!rows.length) {
       $("#feed").innerHTML = '<div class="empty">No signals match these filters. <button class="linkbtn" type="button" data-reset>Clear the filters</button></div>';
       return;
@@ -242,15 +289,14 @@
     $("#feed").innerHTML = rows.map((s, i) => {
       const nl = needsLook(s);
       const anim = !firstRender && !REDUCED && i < 14 ? ' enter" style="animation-delay:' + (i * 22) + 'ms' : "";
+      const where = s.source === "federal_register" ? shortAgency(s.agency) : component(s);
       return '<div class="row' + (nl ? " needs" : "") + anim + '" role="row" tabindex="0" data-n="' + s.n + '" aria-label="' + esc(s.title) + '">' +
-        '<div role="cell"><span class="mlabel">Evidence</span>' + tierBadge(s.tier) + "</div>" +
-        '<div role="cell" class="c-title"><div class="title">' + esc(s.title) + '</div><div class="desc" title="Record text as published">' + esc(s.text) + "</div>" +
-          '<div class="rowfoot">' + (nl ? '<span class="flag">Check this one</span>' : "") +
-          '<button class="rowbtn" type="button" data-open="' + s.n + '">Open the record</button></div></div>' +
-        '<div role="cell" class="aicell"><span class="mlabel">AI read</span>' + aiChip(s.ai) + "</div>" +
-        '<div role="cell" class="meta"><span class="mlabel">Agency</span>' + esc(shortAgency(s.agency)) + '<div class="src">' + esc(srcName(s.source)) + ", " + esc((s.doc_type || "").toLowerCase()) + "</div></div>" +
-        '<div role="cell" class="meta"><span class="mlabel">Date</span>' + esc(fmtDate(s.date)) + "</div>" +
-        '<div role="cell" class="meta num"><span class="mlabel">Amount</span>' + (s.amount != null ? esc(fmtMoney(s.amount)) : '<span class="src">n/a</span>') + "</div>" +
+        '<div role="cell" class="c-g">' + glyph(s) + "</div>" +
+        '<div role="cell" class="c-main"><div class="title">' + esc(s.title) + '</div><div class="desc" title="Record text as published">' + esc(s.text) + "</div>" +
+          '<div class="meta">' + tierBadge(s.tier) + '<span class="where">' + esc(where) + "</span><span>" + esc(srcName(s.source)) + ", " + esc((s.doc_type || "").toLowerCase()) + "</span></div></div>" +
+        '<div role="cell" class="c-ai">' + aiChip(s.ai) + (nl ? '<span class="flag">Check this one</span>' : "") + "</div>" +
+        '<div role="cell" class="c-num"><span class="d"><span class="dl">' + (s.source === "usaspending" ? "Starts" : "Published") + "</span> " + esc(fmtDate(s.date)) + "</span>" + (s.amount != null ? '<span class="amt">' + esc(fmtMoney(s.amount)) + "</span>" : "") +
+          '<button class="rowbtn" type="button" data-open="' + s.n + '">Open record</button></div>' +
         "</div>";
     }).join("");
     firstRender = false;
@@ -258,6 +304,7 @@
 
   function renderActiveChips() {
     const chips = [];
+    if (state.comp) chips.push(["comp", state.comp === "Federal Register" ? "Wedge: Federal Register documents" : "Wedge: " + state.comp]);
     if (state.agency) chips.push(["agency", "Agency: " + state.agency]);
     if (state.minAmt != null) chips.push(["minAmt", "Amount over " + fmtMoney(state.minAmt)]);
     if (state.since) chips.push(["since", "Since " + fmtDate(state.since)]);
@@ -271,7 +318,7 @@
     $("#f-conf").value = state.conf; $("#f-src").value = state.src; $("#f-sort").value = state.sort;
   }
   function resetAll() {
-    Object.assign(state, { q: "", tier: "", ai: "", conf: "", src: "", sort: "relevance", agency: "", minAmt: null, since: null, keyword: "", needs: false });
+    Object.assign(state, { q: "", tier: "", ai: "", conf: "", src: "", sort: "relevance", agency: "", minAmt: null, since: null, keyword: "", needs: false, comp: "" });
     syncControls(); render();
   }
 
@@ -285,7 +332,7 @@
     if (a) {
       runs = '<ul class="runs">' + a.runs.map((r, i) => {
         const diff = a.label !== "Split" && r.relevance !== a.label;
-        return '<li class="' + (diff ? "diff" : "") + '"><span class="rl">Read ' + (i + 1) + ": " + esc(r.relevance) + "</span>" + esc(r.reason) + (diff ? " <em>(differs from the majority)</em>" : "") + "</li>";
+        return '<li class="' + (diff ? "diff" : "") + '"><span class="rl">Read ' + (i + 1) + ": " + esc(r.relevance) + '</span><span class="rr">' + esc(r.reason) + "</span>" + (diff ? " <em>(differs from the majority)</em>" : "") + "</li>";
       }).join("") + "</ul>";
     }
     const human = s.human ? (
@@ -299,14 +346,14 @@
     $("#dlg-body").innerHTML =
       '<div class="dlg-tags">' + tierBadge(s.tier) + aiChip(a) + (look ? '<span class="flag">Check this one</span>' : "") + "</div>" +
       '<section class="sec"><h4>What the record says</h4><blockquote class="quote">' + esc(s.text) + "</blockquote>" +
-        '<dl class="kv"><dt>Agency</dt><dd>' + esc(s.agency) + "</dd><dt>Source</dt><dd>" + esc(srcName(s.source)) + ", " + esc((s.doc_type || "").toLowerCase()) + "</dd><dt>Date</dt><dd>" + esc(fmtDate(s.date)) + "</dd>" +
+        '<dl class="kv"><dt>Agency</dt><dd>' + esc(s.agency) + "</dd><dt>Source</dt><dd>" + esc(srcName(s.source)) + ", " + esc((s.doc_type || "").toLowerCase()) + "</dd><dt>" + dateLabel(s) + "</dt><dd>" + esc(fmtDate(s.date)) + "</dd>" +
         (s.amount != null ? "<dt>Amount</dt><dd>" + esc(fmtMoney(s.amount)) + " (award amount, per USAspending)</dd>" : "") +
         "<dt>Record ID</dt><dd>" + esc(s.id) + "</dd></dl>" +
         '<p style="margin:12px 0 0"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Open the source record (new tab)</a></p></section>' +
       '<section class="sec ai-sec"><h4>AI relevance read</h4>' +
         (a ? "<div>" + aiChip(a) + "</div>" + runs +
           (look ? '<div class="callout warn"><b>Why to check it:</b> ' + esc(look) + "</div>" : '<div class="callout info">All three reads agree. Agreement is not proof, so check the record text before acting.</div>') : "<p>No AI read.</p>") +
-        human + '<p class="conf-text" style="margin:12px 0 0">Generated by Claude (Anthropic) on ' + esc(fmtDate(META.ai_read_date)) + ", in three independent runs, from this record's text only.</p></section>" +
+        human + '<p class="conf-text" style="margin:12px 0 0">Generated by Claude (Anthropic) on ' + esc(fmtDate(META.ai_read_date)) + ", in three separate runs, from this record's title, agency, and text only.</p></section>" +
       '<section class="sec rule-sec"><h4>Why it is Tier ' + s.tier + '</h4><p style="margin:0">' + esc(s.tier_reason) + '</p><p class="conf-text" style="margin:8px 0 0">Set by a plain rule (' + esc(s.tier_rule) + "), not by the AI. A tier says what kind of evidence this is, not whether it matters to zero trust work.</p></section>" +
       '<section class="sec you-sec"><h4>Disagree?</h4><form id="flag-form"><fieldset><legend class="sr-only">Pick one reason</legend>' +
         ["Evidence tier is wrong", "AI relevance read is wrong", "Wrong agency or component", "Duplicate of another signal", "Not relevant to zero trust work", "Other"].map((r) =>
@@ -373,15 +420,15 @@
   function isoDaysBefore(days) { const d = new Date(SNAPSHOT.getTime() - days * 864e5); return d.toISOString().slice(0, 10); }
 
   function parseQuestion(q) {
-    const t = " " + q.toLowerCase().replace(/[?.!]/g, " ") + " ";
+    const t = " " + q.toLowerCase().replace(/[?!,;]|\.(?!\d)/g, " ").replace(/\s+/g, " ") + " ";
     const f = {}; const leaps = [];
     let m = t.match(/tier\s*(1|2|3|one|two|three)\b/);
     if (m) { f.tier = { one: "1", two: "2", three: "3" }[m[1]] || m[1]; }
     else if (/\b(strongest evidence|rules? and proposed rules?|proposed rules?|final rules?)\b/.test(t)) { f.tier = "1"; leaps.push('"' + RegExp.lastMatch.trim() + '" read as Tier 1'); }
     if (/\b(awards?|contracts?|usaspending|task orders?|delivery orders?)\b/.test(t)) { f.src = "usaspending"; }
+    else if (/\b(samgov|sam gov|sam|solicitations?|opportunit(y|ies))\b/.test(t)) { f.src = "sam"; }
     else if (/\b(federal register|rules?|notices?|regulations?)\b/.test(t)) { f.src = "federal_register"; }
-    else if (/\b(sam\.?gov|solicitations?|opportunit(y|ies))\b/.test(t)) { f.src = "sam"; }
-    if (/\b(unsure|not sure|uncertain|disagree|check first|check|review|human look|shaky)\b/.test(t)) { f.needs = true; leaps.push('"' + RegExp.lastMatch.trim() + '" read as "needs a human look"'); }
+    if (/\b(unsure|not sure|uncertain|disagree|check first|check|review|human look|shaky)\b/.test(t)) { f.needs = true; if (RegExp.lastMatch.trim() !== "human look") leaps.push('"' + RegExp.lastMatch.trim() + '" read as "needs a human look"'); }
     if (/\b(high(ly)? relevan\w*|most relevant|very relevant)\b/.test(t)) f.ai = "High";
     else if (/\b(medium|moderate(ly)?) relevan\w*/.test(t)) f.ai = "Medium";
     else if (/\b(low relevan\w*|irrelevant|not relevant|off.topic)\b/.test(t)) f.ai = "Low";
@@ -399,7 +446,12 @@
     for (const [k, v] of KEYWORDS) if (t.includes(k) && !kws.includes(v)) kws.push(v);
     if (kws.length) f.keyword = kws.slice(0, 3).join("|");
     if (/check first|start with|look at first|priorit/.test(t)) f.sort = "review";
-    return { f, leaps };
+    // say plainly which words were not used, so nothing is dropped silently
+    const KNOWN = /^(tier|one|two|three|[123]|strongest|evidence|rules?|proposed|final|awards?|contracts?|usaspending|task|delivery|orders?|federal|register|notices?|regulations?|samgov|sam|gov|solicitations?|opportunit(y|ies)|unsure|not|sure|uncertain|disagree|check|first|review|human|look|shaky|high(ly)?|medium|moderate(ly)?|low|relevan\w*|most|very|irrelevant|off|topic|confident|unanimous|all|agree|over|above|more|than|at|least|big|large|biggest|largest|last|past|days?|weeks?|months?|years?|since|after|from|this|year|recent|new|latest|newest|start|with|priorit\w*|need|needs|zero|trust|signals?|records?|the|a|an|and|or|of|for|to|in|on|about|is|are|was|be|that|which|what|show|me|find|list|give|i|should|do|any|get|there|ones?|by|has|have|ai|dod|\$?[\d.,]+[bmk]?|million|billion|thousand|[bmk])$/;
+    const agencyWords = AGENCIES.reduce((acc, [k]) => acc.concat(k.split(" ")), []);
+    const kwWords = KEYWORDS.map(([k]) => k);
+    const unused = t.trim().split(" ").filter((w) => w && !KNOWN.test(w.replace(/^\$/, "")) && !agencyWords.includes(w) && !kwWords.some((k) => w.startsWith(k.split(" ")[0])));
+    return { f, leaps, unused: unused.filter((w, i) => unused.indexOf(w) === i) };
   }
   function describe(f) {
     const out = [];
@@ -417,7 +469,7 @@
   }
   let pending = null;
   function showInterpretation(q) {
-    const { f, leaps } = parseQuestion(q);
+    const { f, leaps, unused } = parseQuestion(q);
     pending = f;
     const chips = describe(f);
     $("#interp").classList.add("show");
@@ -430,7 +482,8 @@
     $("#ask-run").hidden = false;
     renderPendingChips();
     $("#ask-did").innerHTML = "<b>What I did:</b> read your words into the filters above. I have not searched anything yet, and I cannot invent a signal or change a score." +
-      (leaps.length ? "<br><b>Leaps I made:</b> " + esc(leaps.join("; ")) + "." : "");
+      (leaps.length ? "<br><b>Leaps I made:</b> " + esc(leaps.join("; ")) + "." : "") +
+      (unused.length ? '<br><span class="miss">Words I did not use:</span> ' + esc(unused.join(", ")) + ". Results may be broader than you meant." : "");
   }
   function renderPendingChips() {
     $("#interp-chips").innerHTML = describe(pending).map(([k, t]) => '<span class="chip">' + esc(t) + '<button type="button" aria-label="Remove ' + esc(t) + '" data-unpend="' + k + '">×</button></span>').join("");
@@ -438,7 +491,7 @@
   }
   function runPending() {
     if (!pending) return;
-    Object.assign(state, { tier: "", ai: "", conf: "", src: "", agency: "", minAmt: null, since: null, keyword: "", needs: false, q: "", sort: pending.sort || "relevance" }, pending);
+    Object.assign(state, { tier: "", ai: "", conf: "", src: "", agency: "", minAmt: null, since: null, keyword: "", needs: false, q: "", comp: "", sort: pending.sort || "relevance" }, pending);
     syncControls(); render();
     $("#interp").classList.remove("show");
     const n = SIGNALS.filter(matches).length;
@@ -485,10 +538,22 @@
     });
     cm += "</table>";
     const misses = labeled.filter((s) => s.human !== s.ai.label);
+    // one square per record, grouped by the analyst's label: top row is the AI read, bottom row is the lazy rule
+    const groupsOrder = LBL.filter((h) => labeled.some((s) => s.human === h));
+    const cell = (s, hit, who) => '<span class="u ' + (hit ? "hit" : "miss") + '" data-open="' + s.n + '" title="' + esc(s.title) + ". Analyst: " + esc(s.human) + ". " + (who === "ai" ? "AI: " + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) : "Lazy rule: " + esc(top)) + '."></span>';
+    const units = '<div class="units" role="img" aria-label="' + hits.length + " of " + L + " records where the AI read matched the analyst, against " + counts[top] + " for a rule that calls everything " + esc(top) + '">' +
+      '<div class="u-labels"><span><b>AI relevance read</b> ' + hits.length + " of " + L + "</span><span><b>Lazy rule: everything " + esc(top) + "</b> " + counts[top] + " of " + L + '</span><span class="u-al">Analyst said</span></div>' +
+      '<div class="u-groups">' + groupsOrder.map((h, gi) => {
+        const g = labeled.filter((s) => s.human === h).sort((p, q) => ((p.human === p.ai.label ? 0 : 1) - (q.human === q.ai.label ? 0 : 1)) || p.n - q.n);
+        return '<div class="u-group" style="--n:' + g.length + '">' +
+          '<span class="u-rl">AI read</span><div class="u-cells ai">' + g.map((s, k) => cell(s, s.human === s.ai.label, "ai")).join("") + "</div>" +
+          '<span class="u-rl">Lazy rule</span><div class="u-cells lazy">' + g.map((s) => cell(s, h === top, "lazy")).join("") + "</div>" +
+          '<div class="u-cap"><span class="u-m">Analyst said </span>' + h + " <span>(" + g.length + ")</span></div></div>";
+      }).join("") + "</div></div>" +
+      '<p class="u-key"><i class="u hit"></i>Matched the analyst <i class="u miss"></i>Did not match <span>Hover a square for the record, click to open it.</span></p>';
     el.innerHTML =
       '<p class="acc-lead">The AI read matched the analyst on <b>' + hits.length + " of " + L + "</b> records. A lazy rule that calls everything " + esc(top) + " matches " + counts[top] + ".</p>" +
-      '<div class="vs"><span class="lbl">AI relevance read</span><div class="track"><span class="fill ai" data-w="' + pct(hits.length) + '"></span></div><span class="val">' + hits.length + " of " + L + "</span>" +
-      '<span class="lbl">Lazy rule: everything ' + esc(top) + '</span><div class="track"><span class="fill lazy" data-w="' + pct(counts[top]) + '"></span></div><span class="val">' + counts[top] + " of " + L + "</span></div>" +
+      units +
       '<p class="acc-note">The AI read earns its place on the ' + rest.length + " records the analyst rated something other than " + esc(top) + ". It matched " + restHits + " of them; the lazy rule matches none.</p>" +
       '<div class="acc-grid"><div><h3>Does agreement earn trust?</h3>' + stack +
         '<table class="plain"><tr><th>AI reads</th><th class="num">Signals</th><th class="num">Matched analyst</th><th></th></tr>' +
@@ -496,40 +561,20 @@
         '</table><p class="conf-text" style="margin:10px 0 0">If unanimous reads match the analyst more often than split ones, the dots are telling you something real. With ' + L + " records this is a first look, not a measured rate.</p></div>" +
       "<div><h3>Where they agreed and where they did not</h3>" + cm + "</div></div>" +
       '<div class="misses"><h3>Every miss (' + misses.length + ")</h3>" +
-        (misses.length ? '<ul class="misslist">' + misses.map((s) => '<li><button type="button" data-open="' + s.n + '">' + esc(s.title) + "</button><br>Analyst: <b>" + esc(s.human) + "</b>. AI: <b>" + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) + "</b> (" + esc(confName[s.ai.confidence]) + ").</li>").join("") + "</ul>" : "<p>None.</p>") + "</div>" +
+        (misses.length ? '<ul class="misslist">' + misses.map((s) => '<li><button type="button" data-open="' + s.n + '">' + esc(s.title) + "</button><br>Analyst: <b>" + esc(s.human) + "</b>. <span class=\"aitxt\">AI: <b>" + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) + "</b></span> (" + esc(confName[s.ai.confidence]) + ").</li>").join("") + "</ul>" : "<p>None.</p>") + "</div>" +
       '<p class="method">Method: one analyst (the product owner) labeled ' + (L === SIGNALS.length ? "all " + L : L + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear. The check is not fully blind: the AI reads for four records (1, 7, 8, and 15) had already appeared in design screenshots, and the labeling guide was written after the AI runs. The analyst also saw fuller public record details (contracting office, industry and product codes, period of performance) that the AI read did not. Treat the match rate as a first look." + (L < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p>";
-    // grow the two comparison bars when the section comes into view
-    const fills = $$(".vs .fill", el);
-    const grow = () => fills.forEach((f) => { f.style.width = f.dataset.w + "%"; });
-    if (REDUCED || !("IntersectionObserver" in window)) { grow(); return; }
-    const io = new IntersectionObserver((ents) => { if (ents.some((x) => x.isIntersecting)) { grow(); io.disconnect(); } }, { threshold: 0.4 });
-    io.observe($(".vs", el));
-  }
-
-  // ---------- story preview: one real signal, explained ----------
-  function renderPreview() {
-    const s = SIGNALS.find((x) => x.tier === 1 && x.ai && x.ai.label === "Low") || SIGNALS[0];
-    if (!s || !s.ai) return;
-    $("#preview").innerHTML =
-      '<div class="pv-row">' + tierBadge(s.tier) + aiChip(s.ai) + '<span class="flag">Check this one</span></div>' +
-      '<div class="pv-title">' + esc(s.title) + "</div>" +
-      "<dl><dt>Rule</dt><dd>" + esc(s.tier_reason.replace(/^Tier \d, rule [^:]+: /, "")) + ", the strongest evidence type.</dd>" +
-      '<dt>AI read</dt><dd class="ai">' + esc(s.ai.runs[0].reason) + "</dd></dl>" +
-      '<p class="pv-foot"><button class="linkbtn" type="button" data-open="' + s.n + '">Open the full record</button></p>';
+    // one reveal: the squares fill in left to right when the section comes into view
+    const u = $(".units", el);
+    $$(".u", u).forEach((c, k) => c.style.setProperty("--i", k % 40));
+    if (REDUCED || !("IntersectionObserver" in window)) { u.classList.add("in"); return; }
+    const io = new IntersectionObserver((ents) => { if (ents.some((x) => x.isIntersecting)) { u.classList.add("in"); io.disconnect(); } }, { threshold: 0.35 });
+    io.observe(u);
   }
 
   // ---------- page chrome ----------
   let toastTimer;
   function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 3200); }
   function chrome() {
-    const top = $("#totop"), bar = $("#progress");
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      bar.style.width = (max > 0 ? (100 * scrollY) / max : 0) + "%";
-      top.classList.toggle("show", scrollY > 700);
-    };
-    addEventListener("scroll", onScroll, { passive: true }); onScroll();
-    top.addEventListener("click", () => scrollTo({ top: 0, behavior: REDUCED ? "auto" : "smooth" }));
     if (!("IntersectionObserver" in window)) return;
     const links = $$(".nav a");
     const io = new IntersectionObserver((ents) => {
@@ -551,11 +596,17 @@
       const row = t.closest(".row");
       if (row && !t.closest("a,button")) { openDetail(row.getAttribute("data-n")); return; }
       if (t.matches("[data-clear]")) { const k = t.getAttribute("data-clear"); state[k] = k === "minAmt" || k === "since" ? null : k === "needs" ? false : ""; render(); return; }
+      if (t.id === "show-far") { resetAll(); state.tier = "1"; syncControls(); render(); $$(".row").forEach((r) => hotlight(r.dataset.n, false)); $("#radar").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" }); toast("Showing the Tier 1 signals. Both carry the amber ring."); return; }
       if (t.matches("[data-unpend]")) { delete pending[t.getAttribute("data-unpend")]; renderPendingChips(); return; }
       if (t.matches("[data-reset]")) { resetAll(); return; }
       if (t.id === "dl-flags") { downloadFlags(); return; }
       if (t.matches(".examples button")) { $("#ask-input").value = t.getAttribute("data-q"); showInterpretation(t.getAttribute("data-q")); return; }
     });
+    const feed = $("#feed");
+    feed.addEventListener("mouseover", (e) => { const r = e.target.closest(".row"); if (r && !r.contains(e.relatedTarget)) hotlight(r.dataset.n, true); });
+    feed.addEventListener("mouseout", (e) => { const r = e.target.closest(".row"); if (r && !r.contains(e.relatedTarget)) hotlight(r.dataset.n, false); });
+    feed.addEventListener("focusin", (e) => { const r = e.target.closest(".row"); if (r) hotlight(r.dataset.n, true); });
+    feed.addEventListener("focusout", (e) => { const r = e.target.closest(".row"); if (r && !r.contains(e.relatedTarget)) hotlight(r.dataset.n, false); });
     $("#feed").addEventListener("keydown", (e) => {
       const row = e.target.closest(".row");
       if (row && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openDetail(row.getAttribute("data-n")); }
@@ -569,7 +620,6 @@
   }
 
   renderScope();
-  renderPreview();
   render();
   renderAccuracy();
   renderFlagsLine();

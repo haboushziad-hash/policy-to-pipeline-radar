@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Policy to Pipeline Radar</title>
 <meta name="description" content="A working prototype that finds DoD zero trust signals in public federal records. Each signal shows its rule-based evidence tier, an AI relevance read with how often three runs agreed, and its source.">
-<link rel="preload" href="assets/fonts/ibm-plex-sans-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%231f3a5f' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%231f3a5f' stroke-width='2'/%3E%3Ccircle cx='21' cy='10' r='3' fill='%2318222e'/%3E%3C/svg%3E">
 </head>
 <body>
-<a class="skip" href="#radar">Skip to the signal list</a>
+<a class="skip" href="#feed-start">Skip to the signal list</a>
 
 <header class="topbar">
-  <div class="wrap bar">
+  <div class="bar">
     <a class="logo" href="#top" aria-label="Policy to Pipeline Radar, back to top">
       <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><circle cx="16" cy="16" r="7"/><circle class="b" cx="21" cy="10" r="3"/></svg>
       <span>Policy to Pipeline Radar</span>
@@ -26,83 +26,53 @@
     </nav>
     <span class="snap">Snapshot of Oct 11, 2026</span>
   </div>
-  <div class="progress" aria-hidden="true"><span id="progress"></span></div>
 </header>
 
 <main id="top">
-<!-- ===================== LANDING ===================== -->
-<section class="hero" aria-labelledby="hero-h">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
-      <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work. Every call shows its reason, how often three AI reads agreed, and a link to the source.</p>
+<!-- ===================== INTRO ===================== -->
+<section class="intro" aria-labelledby="hero-h">
+  <div class="intro-grid">
+    <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
+    <div class="intro-copy">
+      <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work, the security approach that verifies every user and device instead of trusting anything inside the network. Every call shows its reason, how often three AI reads agreed, and a link to the source.</p>
       <p class="who">Built for capture managers, the people at a federal contractor who decide which bids are worth chasing. The goal is to spot likely work before a solicitation posts. This prototype covers the first step: finding the signals and explaining each one.</p>
-      <div class="cta">
-        <a class="btn primary" href="#radar">Browse the 35 signals</a>
-        <a class="btn" href="#test">Try the 10-minute test</a>
-      </div>
-      <p class="course">A course prototype for MPIM 6750, Developing and Managing AI Products, Georgetown University.</p>
     </div>
+  </div>
+</section>
 
+<!-- ===================== CONSOLE: radar + signal list ===================== -->
+<section class="console" id="radar" aria-labelledby="radar-h">
+  <div class="scope-pane">
     <figure class="scope" aria-labelledby="scope-cap">
       <div class="scope-box">
         <svg id="scope" viewBox="0 0 600 600" role="img" aria-labelledby="scope-title scope-desc">
           <title id="scope-title">Radar plot of the 35 signals</title>
-          <desc id="scope-desc">Each mark is one public record. Angle groups records by the component that issued them, distance from the center shows age, and size shows the award amount. Click a mark to open its record. The same records are listed below as text.</desc>
+          <desc id="scope-desc">Each mark is one public record. Each wedge holds one DoD component, and Federal Register documents get their own wedge. Distance from the center shows age. Fill color shows the AI relevance read. Click a mark or a wedge. The same records are listed beside the plot as text.</desc>
         </svg>
         <div class="sweep" id="sweep" aria-hidden="true"></div>
         <div class="tip" id="tip" role="status" aria-live="polite"></div>
       </div>
       <figcaption id="scope-cap">
-        <div class="key">
-          <span><i class="k-sq"></i>Federal Register document</span>
-          <span><i class="k-ci"></i>Contract award, sized by amount</span>
-          <span><i class="k-ai"></i>AI read: High</span>
-          <span><i class="k-ai dashed"></i>AI read: Medium</span>
-          <span><i class="k-rv"></i>Needs a human look</span>
-        </div>
-        <div class="scope-foot">
-          <span>The center is the Oct 11, 2026 snapshot, and each ring out is older. Marks are nudged slightly so none hides another.</span>
-          <button class="linkbtn" id="sweep-toggle" type="button" aria-pressed="false">Pause sweep</button>
+        <div class="scope-status"><span id="scope-count"></span><button class="linkbtn" id="sweep-toggle" type="button" aria-pressed="false">Pause sweep</button></div>
+        <dl class="key">
+          <div><dt>Shape</dt><dd><span><i class="g sq"></i>Federal Register document</span><span><i class="g ci"></i>Contract award</span></dd></div>
+          <div><dt>Fill</dt><dd><span><i class="g ci f-high"></i>AI read High</span><span><i class="g ci f-med"></i>Medium</span><span><i class="g ci f-low"></i>Low</span><span><i class="g ci f-unc"></i>Unclear or split</span></dd></div>
+          <div><dt>Ring</dt><dd><span><i class="g ci f-high look"></i>Needs a human look</span></dd></div>
+        </dl>
+        <p class="key-note">Each wedge holds one DoD component, and Federal Register documents get their own; click a wedge to filter the list. Distance from the center is age, counted back from the Oct 11, 2026 snapshot to an award's start date or a document's publication date. The amber ring means the three AI reads were not unanimous, the AI answered Unclear, or a Tier 1 record reads Low. Marks shift slightly so none hides another. Blue only ever means AI.</p>
+        <div class="notes">
+          <p><b>Where the rule and the AI disagree.</b> The two proposed FAR overhaul rules sit in the strongest evidence tier, yet all three AI reads rated them Low. Ranking them first would mislead a capture manager, so both carry the amber ring. <button class="linkbtn" type="button" id="show-far">Show the two rules</button></p>
+          <p><b>The 90-day ring.</b> No award sits inside it, which fits the 90-day delay on DoD contract data in USAspending. The newest marks are all Federal Register documents.</p>
         </div>
       </figcaption>
     </figure>
   </div>
 
-  <div class="wrap">
-    <ol class="flow" aria-label="How the Radar works">
-      <li class="f-src"><b>Pull public records</b><span>Federal Register rules and notices, USAspending awards, and SAM.gov opportunities. Nothing internal or paid.</span></li>
-      <li class="f-rule"><b>Rules assign an evidence tier</b><span>Plain rules rank each record by the type of evidence it is, and the rule is written next to it. No AI here.</span></li>
-      <li class="f-ai"><b>AI reads for relevance, three times</b><span>Claude calls each record High, Medium, Low, or Unclear three separate times. Confidence is how often the reads agree.</span></li>
-      <li class="f-you"><b>You make the call</b><span>Open any signal for the source text and every AI read, and flag anything wrong. Nothing changes on its own.</span></li>
-    </ol>
-  </div>
-</section>
-
-<!-- ===================== DISAGREEMENT STORY ===================== -->
-<section class="story" aria-labelledby="story-h">
-  <div class="wrap story-grid">
-    <div>
-      <h2 id="story-h">When the rule and the AI disagree, the Radar says so.</h2>
-      <p>A tier measures what kind of evidence a record is. It says nothing about whether the record matters to zero trust work. The two FAR overhaul rules are the clearest case: proposed rules sit in the strongest tier, yet all three AI reads rated them Low. Ranking them first would mislead a capture manager, so the Radar flags them for a person instead.</p>
-    </div>
-    <div class="pv" id="preview" aria-label="Example: one signal, explained"></div>
-  </div>
-</section>
-
-<!-- ===================== SIGNALS ===================== -->
-<section class="block" id="radar" aria-labelledby="radar-h">
-  <div class="wrap">
+  <div class="list-pane">
     <div class="head">
       <h2 id="radar-h">The signals</h2>
       <p class="sub">35 real records from the October 11, 2026 run. Open any row for the source text, the rule behind its tier, all three AI reads, and a way to disagree.</p>
     </div>
-
-    <dl class="legend" aria-label="How to read a row">
-      <div><dt><span class="badge t1">Tier 1</span><span class="badge t2">Tier 2</span></dt><dd><b>Evidence tier.</b> Set by a plain rule, never by the AI. Tier badges are always navy.</dd></div>
-      <div><dt><span class="airead"><span class="tag">AI</span>High <span class="dots" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span></span></span></dt><dd><b>AI relevance read.</b> Blue only ever means AI. Filled dots show how many of the three reads agreed.</dd></div>
-      <div><dt><span class="flag">Check this one</span></dt><dd><b>Needs a human look.</b> The reads split, the AI could not tell, or the rule and the AI point opposite ways.</dd></div>
-    </dl>
 
     <div class="ask" id="ask">
       <form id="ask-form" autocomplete="off">
@@ -113,7 +83,7 @@
         </div>
       </form>
       <div class="examples">Try
-        <button type="button" data-q="Tier 1 signals the AI is unsure about">Tier 1 signals the AI is unsure about</button>
+        <button type="button" data-q="Tier 1 signals that need a human look">Tier 1 signals that need a human look</button>
         <button type="button" data-q="Army zero trust identity awards since 2025">Army identity awards since 2025</button>
         <button type="button" data-q="DISA awards over $1M">DISA awards over $1M</button>
         <button type="button" data-q="what should I check first">what should I check first</button>
@@ -135,21 +105,18 @@
       <label>AI relevance<select id="f-ai"><option value="">Any</option><option>High</option><option>Medium</option><option>Low</option><option>Unclear</option><option value="Split">No agreement</option></select></label>
       <label>AI agreement<select id="f-conf"><option value="">Any</option><option value="High">3 of 3 agree</option><option value="Medium">2 of 3 agree</option><option value="Low">No two agree</option></select></label>
       <label>Source<select id="f-src"><option value="">All sources</option><option value="federal_register">Federal Register</option><option value="usaspending">USAspending</option><option value="sam">SAM.gov</option></select></label>
-      <label>Sort<select id="f-sort">
+      <label class="sortl">Sort<select id="f-sort">
         <option value="relevance">Most relevant first</option>
         <option value="review">Needs a human look first</option>
         <option value="tier">Strongest evidence first</option>
         <option value="date">Newest first</option>
         <option value="amount">Largest award first</option>
       </select></label>
-      <button class="linkbtn" id="f-reset" type="button">Reset</button>
     </div>
-    <div class="countline"><span id="count" aria-live="polite"></span><span class="active-chips" id="active-chips"></span></div>
+    <div class="countline"><span><span id="count" aria-live="polite"></span> <button class="linkbtn" id="f-reset" type="button">Reset filters</button></span><span class="active-chips" id="active-chips"></span></div>
+    <p class="rowkey">Tier badges are navy and set by plain rules, never by the AI. Filled dots show how many of the three AI reads agreed.</p>
 
-    <div class="feed" role="table" aria-label="Signals">
-      <div class="feed-head" role="row">
-        <span role="columnheader">Evidence</span><span role="columnheader">Signal</span><span role="columnheader">AI read</span><span role="columnheader">Agency</span><span role="columnheader">Date</span><span role="columnheader" class="r">Amount</span>
-      </div>
+    <div class="feed" role="table" aria-label="Signals" id="feed-start" tabindex="-1">
       <div id="feed" role="rowgroup"></div>
     </div>
 
@@ -164,9 +131,9 @@
 </section>
 
 <!-- ===================== ACCURACY ===================== -->
-<section class="block alt" id="accuracy" aria-labelledby="acc-h">
+<section class="block" id="accuracy" aria-labelledby="acc-h">
   <div class="wrap">
-    <div class="head">
+    <div class="head split">
       <h2 id="acc-h">How much to trust the AI read</h2>
       <p class="sub">Confidence and accuracy answer different questions. Confidence is how often the AI agreed with itself. Accuracy is how often it agreed with a person who knows the domain. This section shows both, so you can see whether high confidence earns trust.</p>
     </div>
@@ -175,7 +142,7 @@
 </section>
 
 <!-- ===================== TEST IT ===================== -->
-<section class="block" id="test" aria-labelledby="test-h">
+<section class="block tint" id="test" aria-labelledby="test-h">
   <div class="wrap test-grid">
     <div class="head">
       <h2 id="test-h">Test it in 10 minutes</h2>
@@ -184,6 +151,7 @@
         <p><b>Set it up.</b> Say it is an early prototype. Only the prototype can pass or fail, never the person testing it.</p>
         <p><b>Stay quiet.</b> Watch what people do more than what they say. Count each task as done, done with a struggle, or gave up.</p>
         <p><b>Fix between sessions.</b> Change the prototype as soon as a problem is clear, then send the team a few lines on what broke and what changed.</p>
+        <p class="credit">Protocol adapted from Cagan (2018), <i>INSPIRED</i>, Chapter 50, "Testing Usability."</p>
       </div>
     </div>
     <ol class="tasks">
@@ -196,12 +164,18 @@
 </section>
 
 <!-- ===================== ABOUT ===================== -->
-<section class="block alt" id="about" aria-labelledby="about-h">
+<section class="block" id="about" aria-labelledby="about-h">
   <div class="wrap">
-    <div class="head">
+    <div class="head split">
       <h2 id="about-h">How it works, and what it cannot do</h2>
       <p class="sub">Rules and AI stay in separate lanes, so a reader can always tell which one made a call.</p>
     </div>
+    <ol class="flow" aria-label="How the Radar works">
+      <li class="f-src"><b>Pull public records</b><span>Federal Register rules and notices, USAspending awards, and SAM.gov opportunities. Nothing internal or paid.</span></li>
+      <li class="f-rule"><b>Rules assign an evidence tier</b><span>Plain rules rank each record by the type of evidence it is, and the rule is written next to it. No AI here.</span></li>
+      <li class="f-ai"><b>AI reads for relevance, three times</b><span>Claude calls each record High, Medium, Low, or Unclear three separate times. Confidence is how often the reads agree.</span></li>
+      <li class="f-you"><b>You make the call</b><span>Open any signal for the source text and every AI read, and flag anything wrong. Nothing changes on its own.</span></li>
+    </ol>
     <div class="about-grid">
       <section class="lane rule-lane" aria-labelledby="ab1">
         <h3 id="ab1">Evidence tiers, set by rules</h3>
@@ -214,9 +188,10 @@
       </section>
       <section class="lane ai-lane" aria-labelledby="ab2">
         <h3 id="ab2">The AI relevance read</h3>
-        <blockquote class="prompt">"For each signal, read the title, agency, and text and judge how relevant it is to Department of Defense zero trust work: High, Medium, or Low. Give a one-sentence reason that names the words in the record that drove the call. If the record is too thin to judge, answer Unclear instead of guessing. Use nothing outside the record, and judge the work described, not the company named."</blockquote>
+        <p class="prompt-label">The instruction, from Prompt 8 in PROMPTS.md (abridged):</p>
+        <blockquote class="prompt">"For each signal &hellip; read the title, agency, and text and judge how relevant it is to Department of Defense zero trust work: High, Medium, or Low. Give a one-sentence reason that names the words in the record that drove the call. If the record is too thin to judge, answer Unclear instead of guessing. Use nothing outside the record, and judge the work described, not the company named."</blockquote>
         <ul>
-          <li>Run three times, independently, on Oct 22, 2026, with Claude (Anthropic). The reads are saved with the data, so this page makes no live AI calls.</li>
+          <li>Run three separate times on Oct 22, 2026, with Claude (Anthropic). Each reason had to stay under 30 words, quote the record's own words, and leave company names out of the call; a script checked every run for that. The reads are saved with the data, so this page makes no live AI calls.</li>
           <li>Confidence comes from agreement across the three runs, not from the model rating itself.</li>
           <li>The AI never changes a tier, and a disagreement never changes the AI read on its own.</li>
         </ul>
@@ -225,7 +200,9 @@
         <h3 id="ab3">Known limits</h3>
         <ul>
           <li>One snapshot, Oct 11, 2026. The notebook pulls fresh data; this page does not.</li>
-          <li>SAM.gov searches titles only and returned no DoD matches that day.</li>
+          <li>The Radar's SAM.gov query searches titles only, and it returned no DoD matches that day.</li>
+          <li>The Federal Register rarely says "zero trust," so that search also matches "cybersecurity" and "CMMC." Its five records are broader than zero trust, which is one reason the AI read exists.</li>
+          <li>An award's date is its period-of-performance start date, as USAspending reports it.</li>
           <li>DoD award data reaches USAspending on a 90-day delay, so recent awards are missing.</li>
           <li>Accuracy is measured against one analyst's labels, and that check was not fully blind (see the method note). It is a first look, not a validated rate.</li>
           <li>Your disagree flags stay in your own browser. In the product they would go to a review log.</li>
@@ -237,7 +214,7 @@
         <ul>
           <li>Public sources only: the Federal Register API, the USAspending API, and the SAM.gov Get Opportunities API.</li>
           <li>Pipeline, rules, and data live in the <a href="https://github.com/haboushziad-hash/policy-to-pipeline-radar">GitHub repository</a> (a Jupyter notebook in Python).</li>
-          <li>Built by prompting Claude (Anthropic). Every prompt is in <a href="https://github.com/haboushziad-hash/policy-to-pipeline-radar/blob/main/PROMPTS.md">PROMPTS.md</a>.</li>
+          <li>Built by prompting Claude (Anthropic). The prompts behind the notebook and the AI read are in <a href="https://github.com/haboushziad-hash/policy-to-pipeline-radar/blob/main/PROMPTS.md">PROMPTS.md</a>; this site was also built with Claude.</li>
           <li>Company names come from public award records. The AI read judges the work described, not the company.</li>
         </ul>
       </section>
@@ -248,12 +225,11 @@
 
 <footer>
   <div class="wrap foot">
-    <span>Policy to Pipeline Radar, a course prototype by Ziad Haboush for MPIM 6750 at Georgetown University, Fall 2026.</span>
+    <span>Policy to Pipeline Radar, a course prototype by Ziad Haboush for MPIM 6750, Developing and Managing AI Products, at Georgetown University, Fall 2026.</span>
     <span>Public data only. Not affiliated with any agency.</span>
   </div>
 </footer>
 
-<button class="totop" id="totop" type="button" aria-label="Back to top">Back to top</button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <dialog id="detail" aria-labelledby="dlg-title">

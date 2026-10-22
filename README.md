@@ -23,7 +23,7 @@ The Radar pulls public federal signals about zero trust work at the Department o
 
 ## The website (Module 7)
 
-`docs/` holds a static site served by GitHub Pages: a landing page, the Radar feed with filters, a detail view for every signal, Ask the Radar, an accuracy check, and a usability test script. It reads one data file, `docs/assets/data.js`, and makes no network or AI calls at runtime.
+`docs/` holds a static site served by GitHub Pages: a radar plot linked to the signal list with filters, a detail view for every signal, Ask the Radar, an accuracy check, and a usability test script. It reads one data file, `docs/assets/data.js`, and makes no network or AI calls at runtime.
 
 - **Evidence tier (navy):** the notebook's plain rules, unchanged.
 - **AI relevance read (blue):** Prompt 8 in `PROMPTS.md`, run three times. Confidence is how many runs agree: 3 of 3, 2 of 3, or no two.
@@ -64,7 +64,7 @@ Open `radar.ipynb` and choose Run > Run All Cells.
 - The Federal Register rarely uses the phrase "zero trust", so the policy search also covers cybersecurity and CMMC.
 - DoD contract data reaches FPDS and USAspending on a 90-day delay, so the award window is 365 days.
 - SAM.gov searches titles only and caps daily requests per key. The notebook reuses the day's pull and does not fetch full notice descriptions.
-- The lead-time estimate and the LLM-drafted rationale are labeled placeholders.
+- In the notebook mockup, the lead-time estimate and the LLM-drafted rationale are labeled placeholders. The website adds the AI relevance read; the lead-time estimate is still not built.
 
 ## Last run
 
