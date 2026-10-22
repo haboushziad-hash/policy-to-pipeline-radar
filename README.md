@@ -62,7 +62,7 @@ Open `radar.ipynb` and choose Run > Run All Cells.
 
 - A tier measures the type of evidence, not relevance. A privacy notice that mentions cybersecurity still lands in Tier 2, which is what the disagree log is for.
 - The Federal Register rarely uses the phrase "zero trust", so the policy search also covers cybersecurity and CMMC.
-- DoD contract data reaches FPDS and USAspending on a 90-day delay, so the award window is 365 days.
+- DoD contract data reaches FPDS and USAspending on a 90-day delay, so the award window is 365 days. The window matches on award activity; the date shown for an award is its period-of-performance start, which can be older.
 - SAM.gov searches titles only and caps daily requests per key. The notebook reuses the day's pull and does not fetch full notice descriptions.
 - In the notebook mockup, the lead-time estimate and the LLM-drafted rationale are labeled placeholders. The website adds the AI relevance read; the lead-time estimate is still not built.
 

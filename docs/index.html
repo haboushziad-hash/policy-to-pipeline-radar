@@ -6,7 +6,7 @@
 <title>Policy to Pipeline Radar</title>
 <meta name="description" content="A working prototype that finds DoD zero trust signals in public federal records. Each signal shows its rule-based evidence tier, an AI relevance read with how often three runs agreed, and its source.">
 <link rel="preload" href="assets/fonts/ibm-plex-sans-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/style.css?v=20261022c">
+<link rel="stylesheet" href="assets/style.css?v=20261022d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%231f3a5f' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%231f3a5f' stroke-width='2'/%3E%3Ccircle cx='21' cy='10' r='3' fill='%2318222e'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -34,7 +34,7 @@
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
-      <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work, the security approach that verifies every user and device instead of trusting anything inside the network. Every call shows its reason, how often three AI reads agreed, and a link to the source.</p>
+      <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them into tiers by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work, the security approach that verifies every user and device instead of trusting anything inside the network. Every call shows its reason, how often three AI reads agreed, and a link to the source.</p>
       <p class="who">Built for capture managers, the people at a federal contractor who decide which bids are worth chasing. The goal is to spot likely work before a solicitation posts. This prototype covers the first step: finding the signals and explaining each one.</p>
       <div class="cta">
         <a class="btn primary" href="#radar">Browse the 35 signals</a>
@@ -59,7 +59,7 @@
           <div><dt>Ring</dt><dd><span><i class="g ci f-high look"></i>Needs a human look</span></dd></div>
         </dl>
         <div class="scope-foot">
-          <span>The center is the Oct 11, 2026 snapshot, and each ring out is older. No award sits inside the 90-day ring, which fits the 90-day delay on DoD contract data in USAspending. Click a wedge to filter the list.</span>
+          <span>The center is the Oct 11, 2026 snapshot, and each ring out is older. No award sits inside the 90-day ring, which fits the 90-day delay on DoD contract data in USAspending. Marks shift within their ring band so none hides another; hover one for its date, or click a wedge to filter the list.</span>
           <button class="linkbtn" id="sweep-toggle" type="button" aria-pressed="false">Pause sweep</button>
         </div>
       </figcaption>
@@ -69,7 +69,7 @@
   <div class="wrap">
     <ol class="flow" aria-label="How the Radar works">
       <li class="f-src"><b>Pull public records</b><span>Federal Register rules and notices, USAspending awards, and SAM.gov opportunities. Nothing internal or paid.</span></li>
-      <li class="f-rule"><b>Rules assign an evidence tier</b><span>Plain rules rank each record by the type of evidence it is, and the rule is written next to it. No AI here.</span></li>
+      <li class="f-rule"><b>Rules assign an evidence tier</b><span>Plain rules rank each record by the type of evidence it is, and each record carries the rule that placed it. No AI here.</span></li>
       <li class="f-ai"><b>AI reads for relevance, three times</b><span>Claude calls each record High, Medium, Low, or Unclear three separate times. Confidence is how often the reads agree.</span></li>
       <li class="f-you"><b>You make the call</b><span>Open any signal for the source text and every AI read, and flag anything wrong. Nothing changes on its own.</span></li>
     </ol>
@@ -215,7 +215,7 @@
         <p class="prompt-label">The instruction, from Prompt 8 in PROMPTS.md (abridged):</p>
         <blockquote class="prompt">"For each signal &hellip; read the title, agency, and text and judge how relevant it is to Department of Defense zero trust work: High, Medium, or Low. Give a one-sentence reason that names the words in the record that drove the call. If the record is too thin to judge, answer Unclear instead of guessing. Use nothing outside the record, and judge the work described, not the company named."</blockquote>
         <ul>
-          <li>Run three separate times on Oct 22, 2026, with Claude (Anthropic). Each reason had to stay under 30 words, quote the record's own words, and leave company names out of the call; a script checked every run for that. The reads are saved with the data, so this page makes no live AI calls.</li>
+          <li>Run three separate times on Oct 22, 2026, with Claude (Anthropic). Each reason had to stay under 30 words, quote the record's own words, and leave company names out of the call; a script checked every run for the word limit and the quotes. The reads are saved with the data, so this page makes no live AI calls.</li>
           <li>Confidence comes from agreement across the three runs, not from the model rating itself.</li>
           <li>The AI never changes a tier, and a disagreement never changes the AI read on its own.</li>
         </ul>
@@ -264,7 +264,7 @@
   <div class="dlg-body" id="dlg-body"></div>
 </dialog>
 
-<script src="assets/data.js?v=20261022c"></script>
-<script src="assets/app.js?v=20261022c"></script>
+<script src="assets/data.js?v=20261022d"></script>
+<script src="assets/app.js?v=20261022d"></script>
 </body>
 </html>

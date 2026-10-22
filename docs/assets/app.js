@@ -510,7 +510,7 @@
     syncControls(); render();
     $("#interp").classList.remove("show");
     const n = SIGNALS.filter(matches).length;
-    toast(n + " signal" + (n === 1 ? "" : "s") + " match. The filters stay visible above the list.");
+    toast(n + (n === 1 ? " signal matches." : " signals match.") + " The filters stay visible above the list.");
     $(".filters").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
   }
 
@@ -565,7 +565,7 @@
           '<span class="u-rl">Lazy rule</span><div class="u-cells lazy">' + g.map((s) => cell(s, h === top, "lazy")).join("") + "</div>" +
           '<div class="u-cap"><span class="u-m">Analyst said </span>' + h + " <span>(" + g.length + ")</span></div></div>";
       }).join("") + "</div></div>" +
-      '<p class="u-key"><i class="u hit"></i>Matched the analyst <i class="u miss"></i>Did not match <span>Hover a square for the record, click to open it.</span></p>';
+      '<p class="u-key"><i class="u hit"></i>AI read matched the analyst <i class="u lazyhit"></i>Lazy rule matched <i class="u miss"></i>Did not match <span>Hover a square for the record, click to open it.</span></p>';
     el.innerHTML =
       '<p class="acc-lead">The AI read matched the analyst on <b>' + hits.length + " of " + L + "</b> records. A lazy rule that calls everything " + esc(top) + " matches " + counts[top] + ".</p>" +
       units +
@@ -577,7 +577,7 @@
       "<div><h3>Where they agreed and where they did not</h3>" + cm + "</div></div>" +
       '<div class="misses"><h3>Every miss (' + misses.length + ")</h3>" +
         (misses.length ? '<ul class="misslist">' + misses.map((s) => '<li><button type="button" data-open="' + s.n + '">' + esc(s.title) + "</button><br>Analyst: <b>" + esc(s.human) + "</b>. <span class=\"aitxt\">AI: <b>" + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) + "</b></span> (" + esc(confName[s.ai.confidence]) + ").</li>").join("") + "</ul>" : "<p>None.</p>") + "</div>" +
-      '<p class="method">Method: one analyst (the product owner) labeled ' + (L === SIGNALS.length ? "all " + L : L + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear. The check is not fully blind: the AI reads for four records (1, 7, 8, and 15) had already appeared in design screenshots, and the labeling guide was written after the AI runs. The analyst also saw fuller public record details that the AI read did not (contracting and funding office, industry and product codes, period of performance, obligated amount, contract vehicle, and competition type), while the analyst's list left out the recipient names the AI saw in award titles. Treat the match rate as a first look." + (L < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p>";
+      '<p class="method">Method: one analyst (the product owner) labeled ' + (L === SIGNALS.length ? "all " + L : L + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear. The check is not fully blind: the AI reads for four records (1, 7, 8, and 15) had already appeared in design screenshots, and the labeling guide was written after the AI runs. The analyst also saw fuller public record details that the AI read did not (contracting and funding office, industry and product codes, period of performance, obligated amount, contract vehicle, and competition type, and for the five Federal Register records the document type, topics, CFR parts, docket, and comment dates), while the analyst's list left out the recipient names the AI saw in award titles and two record texts. Treat the match rate as a first look." + (L < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p>";
     // one reveal: the squares fill in left to right when the section comes into view
     const u = $(".units", el);
     $$(".u", u).forEach((c, k) => c.style.setProperty("--i", k % 40));
