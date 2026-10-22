@@ -30,8 +30,8 @@
   <div class="wrap">
     <p class="eyebrow">Course prototype · MPIM 6750 · Georgetown University</p>
     <div class="hero-grid"><div>
-    <h1 id="hero-h">See DoD zero trust work coming before the solicitation posts.</h1>
-    <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work. Every call shows its reason, how confident the AI is, and a link to the source.</p>
+    <h1 id="hero-h">Find DoD zero trust work in public federal records.</h1>
+    <p class="lede">Policy to Pipeline Radar reads public federal records, sorts them by how strong the evidence is, and adds an AI read of how relevant each one is to Department of Defense zero trust work. Every call shows its reason, how often three AI reads agreed, and a link to the source. The goal is to spot likely work before a solicitation posts, and this prototype covers the first step: finding the signals and explaining each one.</p>
     <p class="who">Built for capture managers: the people at a federal contractor who decide which bids are worth chasing.</p>
     <div class="cta">
       <a class="btn primary" href="#radar">Open the Radar</a>
@@ -59,7 +59,7 @@
 
     <div class="legend" aria-label="How to read a row">
       <div><span class="badge t1">Tier 1</span> <span class="badge t2">Tier 2</span><strong>Evidence tier (rules)</strong>What kind of evidence the record is. Navy always means a rule decided it, not the AI.</div>
-      <div><span class="airead"><span class="tag">AI</span>High <span class="dots" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span></span></span><strong>AI relevance read</strong>Blue always means AI. The dots show how many of the three reads agreed: three filled is unanimous.</div>
+      <div><span class="airead"><span class="tag">AI</span>High <span class="dots" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span></span></span><strong>AI relevance read</strong>Blue only ever means AI. The dots show how many of the three reads agreed: three filled is unanimous.</div>
       <div><span class="flag">Check this one</span><strong>Needs a human look</strong>The reads disagreed, the AI could not tell, or the rule and the AI point in opposite directions.</div>
     </div>
 
@@ -71,7 +71,7 @@
       <form id="ask-form" autocomplete="off">
         <label class="sr-only" for="ask-input">Ask a question about the signals</label>
         <input id="ask-input" type="text" placeholder="e.g. Air Force awards over $1M with high relevance">
-        <button class="btn ai" type="submit">Read my question</button>
+        <button class="btn rule" type="submit">Read my question</button>
       </form>
       <div class="examples">Try:
         <button type="button" data-q="Tier 1 signals the AI is unsure about">Tier 1 signals the AI is unsure about</button>
@@ -82,7 +82,7 @@
       <div class="interp" id="interp" aria-live="polite">
         <div class="label">Here is how I read your question. Remove anything I got wrong, then run it.</div>
         <div class="chips" id="interp-chips"></div>
-        <button class="btn ai small" id="ask-run" type="button">Run these filters</button>
+        <button class="btn rule small" id="ask-run" type="button">Run these filters</button>
         <button class="btn link small" id="ask-cancel" type="button">Cancel</button>
         <div class="did" id="ask-did"></div>
       </div>
@@ -137,15 +137,15 @@
     <h2 id="test-h">Test it in 10 minutes</h2>
     <p class="sub">The usability script for the first sessions with capture managers. Each task targets one place where the interface has to earn trust. If you are trying the prototype yourself, run the tasks in order and notice where you hesitate.</p>
     <ol class="tasks">
-      <li><b>Before you scroll: what does this tool do, and who is it for?</b>Answer from the top of the page alone.<div class="look">Watching for: whether the landing page sets the right expectation.</div></li>
-      <li><b>Find the newest Tier 1 signal and say why it is Tier 1.</b>Then say whether you would act on it.<div class="look">Watching for: whether people read the rule, and whether they see that the AI rated it Low.</div></li>
+      <li><b>Before you scroll: what does this tool do, who is it for, and what would be useful to you?</b>Answer from the top of the page alone.<div class="look">Watching for: whether the landing page sets the right expectation.</div></li>
+      <li><b>Find a Tier 1 signal and say why it is Tier 1.</b>Then say whether you would act on it.<div class="look">Watching for: whether people read the rule, and whether they see that the AI rated it Low.</div></li>
       <li><b>Find a signal the AI was not sure about and decide for yourself.</b>Use whatever you need on the detail view.<div class="look">Watching for: whether the dots and the three reads make the uncertainty clear.</div></li>
       <li><b>You think one signal is wrong. Tell the Radar.</b>Pick any one and flag it.<div class="look">Watching for: whether the disagree control is easy to find and whether people expect it to change the score.</div></li>
     </ol>
     <div class="protocol">
-      <div><b>Stay quiet</b>Watch what people do, not what they say they would do. Count each task as done, done with a struggle, or gave up.</div>
-      <div><b>Fix between sessions</b>Change the prototype as soon as a problem is clear. The goal is learning fast, not proving anything.</div>
-      <div><b>One short write-up</b>After each round, a few lines on what broke and what changed, sent to the team.</div>
+      <div><b>Set it up</b>Say it is an early prototype. Only the prototype can pass or fail, never the person testing it.</div>
+      <div><b>Stay quiet</b>Watch what people do more than what they say. Count each task as done, done with a struggle, or gave up.</div>
+      <div><b>Fix between sessions</b>Change the prototype as soon as a problem is clear, then send the team a few lines on what broke and what changed.</div>
     </div>
   </div>
 </section>
@@ -180,7 +180,7 @@
           <li>One snapshot (Oct 11, 2026). The notebook pulls fresh data; this page does not.</li>
           <li>SAM.gov searches titles only and returned no DoD matches that day.</li>
           <li>DoD award data reaches USAspending on a 90-day delay, so recent awards are missing.</li>
-          <li>Accuracy is measured against one analyst's labels. That is a first check, not a validated rate.</li>
+          <li>Accuracy is measured against one analyst's labels, and that check was not fully blind (see the method note). It is a first look, not a validated rate.</li>
           <li>Your disagree flags stay in your own browser. In the product they would go to a review log.</li>
           <li>Lead-time estimates and the capture brief drafter from the design are not built yet.</li>
         </ul>

@@ -153,7 +153,7 @@
     if (state.since) chips.push(["since", "Since " + fmtDate(state.since)]);
     if (state.keyword) chips.push(["keyword", "Mentions: " + state.keyword.split("|").join(" or ")]);
     if (state.needs) chips.push(["needs", "Needs a human look"]);
-    $("#active-chips").innerHTML = chips.map(([k, t]) => '<span class="chip ai">' + esc(t) + '<button type="button" aria-label="Remove ' + esc(t) + '" data-clear="' + k + '">×</button></span>').join("");
+    $("#active-chips").innerHTML = chips.map(([k, t]) => '<span class="chip rule">' + esc(t) + '<button type="button" aria-label="Remove ' + esc(t) + '" data-clear="' + k + '">×</button></span>').join("");
   }
 
   function syncControls() {
@@ -180,8 +180,8 @@
     }
     const human = s.human ? (
       a && s.human === a.label
-        ? '<div class="callout good"><b>Accuracy check:</b> an analyst labeled this one ' + esc(s.human) + ' without seeing the AI read. They match.</div>'
-        : '<div class="callout bad"><b>Accuracy check:</b> an analyst labeled this one ' + esc(s.human) + " without seeing the AI read. The AI said " + esc(a ? (a.label === "Split" ? "nothing consistent" : a.label) : "nothing") + ".</div>"
+        ? '<div class="callout good"><b>Accuracy check:</b> the analyst labeled this one ' + esc(s.human) + '. They match.</div>'
+        : '<div class="callout bad"><b>Accuracy check:</b> the analyst labeled this one ' + esc(s.human) + ". The AI said " + esc(a ? (a.label === "Split" ? "nothing consistent" : a.label) : "nothing") + ".</div>"
     ) : "";
     const flags = loadFlags().filter((f) => f.id === s.id);
 
@@ -335,7 +335,7 @@
       (leaps.length ? "<br><b>Leaps I made:</b> " + esc(leaps.join("; ")) + "." : "");
   }
   function renderPendingChips() {
-    $("#interp-chips").innerHTML = describe(pending).map(([k, t]) => '<span class="chip ai">' + esc(t) + '<button type="button" aria-label="Remove ' + esc(t) + '" data-unpend="' + k + '">×</button></span>').join("");
+    $("#interp-chips").innerHTML = describe(pending).map(([k, t]) => '<span class="chip rule">' + esc(t) + '<button type="button" aria-label="Remove ' + esc(t) + '" data-unpend="' + k + '">×</button></span>').join("");
     if (!describe(pending).length) $("#ask-run").hidden = true;
   }
   function runPending() {
@@ -394,7 +394,7 @@
       '<div class="card"><h4>Where they agreed and where they did not</h4>' + cm + "</div></div>" +
       '<div class="card" style="margin-top:4px"><h4>Every miss (' + misses.length + ")</h4>" +
         (misses.length ? '<ul class="misslist">' + misses.map((s) => '<li><button type="button" data-open="' + s.n + '">' + esc(s.title) + "</button><br>Analyst: <b>" + esc(s.human) + "</b> · AI: <b>" + esc(s.ai.label === "Split" ? "no agreement" : s.ai.label) + "</b> (" + esc(confName[s.ai.confidence]) + ")</li>").join("") + "</ul>" : "<p>None.</p>") +
-        '<p class="conf-text" style="margin:8px 0 0">Method: one analyst (the product owner) labeled ' + (labeled.length === SIGNALS.length ? "all " + labeled.length : labeled.length + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear before seeing any AI read." + (labeled.length < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p></div>";
+        '<p class="conf-text" style="margin:8px 0 0">Method: one analyst (the product owner) labeled ' + (labeled.length === SIGNALS.length ? "all " + labeled.length : labeled.length + " of the " + SIGNALS.length) + " records High, Medium, Low, or Unclear. The check is not fully blind: the AI reads for four records (1, 7, 8, and 15) had already appeared in design screenshots, and the labeling guide was written after the AI runs. Treat the match rate as a first look." + (labeled.length < SIGNALS.length ? " Unlabeled records are left out of every number in this section." : "") + "</p></div>";
   }
 
   // ---------- landing preview: one real signal, explained ----------
